@@ -12,7 +12,7 @@
 ### Port Scanning
 
 Multi-threaded approach to execute atomic port scanning actions. 
-Threads will then write to data structure containing representation of Scannning Task  
+Threads will then write to data structure containing representation of Scanning Task  
 
 
 #### Default set of ports to scan :
@@ -28,6 +28,13 @@ Port 443 (TCP) — HTTPS
 #### Scan range of IPs
 
 ### Data storage:
-- Planning on using some sort of temporary relational storage like h2
+- Planning on using some sort of temporary relational storage like h2 for now. Eventually use data source outside of application
+
+
+
+## Later on ideas:
+- Have separate module for actually execution of port scanning, namely, background-module
+- Use module that currently defines API to produce into queue, background processing will execute port scanning and write reports to DB
+- API layer will then simply read requested reports and also be able to determine if scanning task is "done".
 
 
