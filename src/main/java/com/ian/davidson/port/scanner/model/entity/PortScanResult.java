@@ -1,4 +1,4 @@
-package com.ian.davidson.port.scanner.entity;
+package com.ian.davidson.port.scanner.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
