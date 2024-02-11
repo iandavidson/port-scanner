@@ -1,10 +1,16 @@
 # port-scanner Java based Multi-threaded Port Scanner
 
 ## Use cases:
-- Kick off port scan at IP addresses (that you own) for specific ports and port ranges (to be scanned for each IP address). Then hit endpoint to get results.
+- Kick off port scan event at IP addresses (that you own) for specific ports and port ranges (to be scanned for each IP address). Then hit endpoint to get results.
     - User makes POST request endpoint, providing IP, List<Port> and List<PortRange> in body.
     - Application kicks off process of scanning all provided ports at IP
     - GET endpoint is available to show results and if task is complete
+- Look up previously requested event, by Id
+    - Response include the following:
+      - Raw Scan Results
+      - Original specification (what was requested initially)
+      - Meter:
+        - time taken
 
 ## How it works
 
