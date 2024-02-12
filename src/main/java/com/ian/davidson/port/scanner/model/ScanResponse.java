@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +16,9 @@ public class ScanResponse {
     private long Id;
     private Instant createdAt;
 
-    @JsonProperty("IPs")
-    private List<Long> Ips;
 
-    private List<Long> Ports;
+    @JsonProperty("IPs")
+    private Set<Long> Ips;
+
+    private Set<Long> Ports;
 }

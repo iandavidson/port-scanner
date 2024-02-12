@@ -1,16 +1,18 @@
 package com.ian.davidson.port.scanner.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ian.davidson.port.scanner.validation.constraint.ScanRequestValidatorConstraint;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
+@ScanRequestValidatorConstraint
 @Data
 public class ScanRequest {
     @JsonProperty("IPs")
-    private List<Long> Ips;
+    private Set<Long> Ips;
 
-    private List<Long> Ports;
+    private Set<Long> Ports;
 }
