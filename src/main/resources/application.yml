@@ -1,0 +1,18 @@
+message: active profile 'default'
+
+server:
+  port: 8080
+  max-http-header-size: 10485760
+  servlet:
+    context-path: /scanner
+
+management:
+  server.port: 9080
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    root: INFO

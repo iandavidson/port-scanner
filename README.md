@@ -13,7 +13,7 @@
         - time taken
 
 ## How it works
-
+![HighLevel](docs/HighLevelSys.png)
 
 ### Port Scanning
 
