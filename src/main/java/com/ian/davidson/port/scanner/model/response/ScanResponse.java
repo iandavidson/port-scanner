@@ -1,4 +1,4 @@
-package com.ian.davidson.port.scanner.model;
+package com.ian.davidson.port.scanner.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class ScanResponse {
-    private long Id;
+    private long id;
     private Instant createdAt;
 
 

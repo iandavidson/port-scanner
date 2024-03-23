@@ -7,8 +7,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class PortScanResult {
+public class Address {
     private final int port;
     private final int timeout;
     private final boolean exposed;
+    private final ConnectionStatus status;
 }
