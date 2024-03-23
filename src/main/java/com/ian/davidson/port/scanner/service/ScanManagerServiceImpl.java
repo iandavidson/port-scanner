@@ -23,7 +23,7 @@ public class ScanManagerServiceImpl implements ScanManagerService {
         //push to queue to be executed and results recorded.
         try {
             scanQueue.waitIsNotFull();
-            scanQueue.execute(scanRequest);
+            scanQueue.add(scanRequest);
         } catch (RuntimeException e) {
             throw new IllegalStateException("Failed to execute scan");
         } catch (InterruptedException e) {
