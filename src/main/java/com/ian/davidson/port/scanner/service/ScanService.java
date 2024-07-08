@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 
 import java.net.URI;
 
-public interface ScanManagerService {
+public interface ScanService {
     ScanResponse initializeScan(final @Valid ScanRequest scanRequest);
     ScanResponse getScan(final Long id);
 }
