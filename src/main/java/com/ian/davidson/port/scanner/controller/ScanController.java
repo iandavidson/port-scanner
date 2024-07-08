@@ -21,9 +21,8 @@ public class ScanController {
     private final ScanManagerService scanManagerService;
     private HttpServletRequest httpServletRequest;
 
-    public ScanController(final ScanManagerService scanManagerService, HttpServletRequest httpServletRequest) {
+    public ScanController(final ScanManagerService scanManagerService) {
         this.scanManagerService = scanManagerService;
-        this.httpServletRequest = httpServletRequest;
     }
 
     @PostMapping(path = "/scan", produces = MediaType.APPLICATION_JSON_VALUE)
