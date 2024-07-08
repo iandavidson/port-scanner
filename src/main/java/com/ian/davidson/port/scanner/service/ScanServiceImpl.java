@@ -2,7 +2,7 @@ package com.ian.davidson.port.scanner.service;
 
 import com.ian.davidson.port.scanner.model.request.ScanRequest;
 import com.ian.davidson.port.scanner.model.response.ScanResponse;
-import com.ian.davidson.port.scanner.service.queue.ScanDispatchProducer;
+import com.ian.davidson.port.scanner.queue.ScanDispatchProducer;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 

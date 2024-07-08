@@ -5,29 +5,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @Builder
-@Table(name = "address_scan")
-@Entity
-public class AddressScan {
+@Entity(name = "port")
+public class Port {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final int id;
+    private final Long id;
 
-    private final String ip;
-    private final int port;
+    private final Integer port;
 
-    @Column(name = "time_out")
-    private final int timeOut;
-    private final boolean exposed;
-    private final ConnectionStatus status;
+    @ManyToOne
+    private final Session session;
+
+    @CreationTimestamp
+    @Column(name = "creation_date")
+    private final LocalDateTime creationDate;
 
 }

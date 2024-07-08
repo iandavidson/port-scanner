@@ -1,4 +1,4 @@
-package com.ian.davidson.port.scanner.service.queue;
+package com.ian.davidson.port.scanner.queue;
 
 import com.ian.davidson.port.scanner.model.response.ScanResponse;
 import org.springframework.stereotype.Component;

@@ -1,45 +1,38 @@
 package com.ian.davidson.port.scanner.model.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @Builder
-@Table(name = "tenant",
-        uniqueConstraints =
-        @UniqueConstraint(columnNames = {"name"}))
-@Entity
-public class Tenant {
+@Entity(name = "address")
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long id;
 
-    private final String name;
+    @Pattern(
+            regexp = "^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$",
+            message = "Address does not conform to valid IP structure")
+    private final String address;
 
-    @OneToMany
-    private Set<Address> addresses;
-
-    @OneToMany
-    private Set<Port> ports;
+    @ManyToOne
+    private final Tenant tenant;
 
     @CreationTimestamp
     @Column(name = "creation_date")
-    private LocalDateTime creationDate;
-
+    private final LocalDateTime creationDate;
 }

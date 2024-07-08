@@ -1,4 +1,4 @@
-package com.ian.davidson.port.scanner.service.queue.component;
+package com.ian.davidson.port.scanner.queue.component;
 
 //public class ScanProducer implements Runnable {
 //    private final ScanQueue scanQueue;

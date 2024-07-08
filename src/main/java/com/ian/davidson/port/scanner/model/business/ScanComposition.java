@@ -4,7 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Builder
-public record ScanComposition(List<String> ipAddresses, List<Integer> ports) { }
+public record ScanComposition(Set<Address> ipAddresses, Set<Port> ports) { }

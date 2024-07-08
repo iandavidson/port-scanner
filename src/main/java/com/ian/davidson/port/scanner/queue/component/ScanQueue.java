@@ -1,4 +1,4 @@
-package com.ian.davidson.port.scanner.service.queue.component;
+package com.ian.davidson.port.scanner.queue.component;
 
 
 import com.ian.davidson.port.scanner.model.request.ScanRequest;

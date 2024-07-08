@@ -1,45 +1,43 @@
 package com.ian.davidson.port.scanner.model.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+
 
 @Data
 @AllArgsConstructor
 @Builder
-@Table(name = "tenant",
-        uniqueConstraints =
-        @UniqueConstraint(columnNames = {"name"}))
+@Table(name = "scan_result")
 @Entity
-public class Tenant {
+public class ScanResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long id;
 
-    private final String name;
+    private final String ip;
+    private final Integer port;
 
-    @OneToMany
-    private Set<Address> addresses;
+    @Column(name = "time_out")
+    private final Integer timeOut;
+    private final Boolean exposed;
+    private final ConnectionStatus status;
 
-    @OneToMany
-    private Set<Port> ports;
+    @ManyToOne
+    private final Tenant tenant;
 
     @CreationTimestamp
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
-
 }
