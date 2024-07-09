@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/scan")
+@Deprecated
 public class ScanController {
 
     private final ScanService scanService;

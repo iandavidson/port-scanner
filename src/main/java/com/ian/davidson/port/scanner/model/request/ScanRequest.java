@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Deprecated
 public class ScanRequest {
 
     private List<Integer> ports = new ArrayList<>();

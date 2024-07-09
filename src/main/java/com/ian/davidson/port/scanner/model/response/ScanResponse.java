@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
+@Deprecated
 public class ScanResponse {
     private long id;
     private Instant createdAt;
