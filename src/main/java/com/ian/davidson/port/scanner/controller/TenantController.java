@@ -65,15 +65,17 @@ public class TenantController {
 
     @PostMapping(path = "/{tenantId}/surface")
     public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId, @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
+        Tenant tenant = tenantService.getTenant(tenantId);
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(
                         tenantService.addSurface(
                                 portTransformer.toPorts(
-                                        tenantSurfaceRequest.ports()),
+                                        tenantSurfaceRequest.ports(), tenant),
                                 addressTransformer.toAddresses(
-                                        tenantSurfaceRequest.addresses()),
-                                tenantId));
+                                        tenantSurfaceRequest.addresses(), tenant),
+                                tenant));
 
     }
 

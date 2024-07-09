@@ -6,6 +6,8 @@ import com.ian.davidson.port.scanner.model.entity.Address;
 import com.ian.davidson.port.scanner.model.entity.Port;
 import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.model.response.TenantSurfaceResponse;
+import com.ian.davidson.port.scanner.repository.AddressRepository;
+import com.ian.davidson.port.scanner.repository.PortRepository;
 import com.ian.davidson.port.scanner.repository.TenantRepository;
 import com.ian.davidson.port.scanner.service.TenantService;
 import java.util.Optional;
@@ -16,9 +18,15 @@ import org.springframework.stereotype.Service;
 public class TenantServiceImpl implements TenantService {
 
     private final TenantRepository tenantRepository;
+    private final AddressRepository addressRepository;
+    private final PortRepository portRepository;
 
-    public TenantServiceImpl(final TenantRepository tenantRepository) {
+    public TenantServiceImpl(final TenantRepository tenantRepository,
+                             final AddressRepository addressRepository,
+                             final PortRepository portRepository) {
         this.tenantRepository = tenantRepository;
+        this.addressRepository = addressRepository;
+        this.portRepository = portRepository;
     }
 
     @Override
@@ -46,7 +54,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public TenantSurfaceResponse addSurface(Set<Port> ports, Set<Address> addresses, Long tenantId) {
-        //
+    public TenantSurfaceResponse addSurface(Set<Port> ports, Set<Address> addresses, Tenant tenant) {
+
     }
 }

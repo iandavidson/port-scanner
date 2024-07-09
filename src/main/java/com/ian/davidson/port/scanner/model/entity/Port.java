@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class Port {
     private final Integer port;
 
     @ManyToOne
-    private final Session session;
+    private final Tenant tenant;
 
     @CreationTimestamp
     @Column(name = "creation_date")

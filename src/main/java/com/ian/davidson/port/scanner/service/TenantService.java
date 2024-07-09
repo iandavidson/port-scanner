@@ -14,5 +14,5 @@ public interface TenantService {
 
     void deleteTenant(Long id);
 
-    TenantSurfaceResponse addSurface(Set<Port> ports, Set<Address> addresses, Long tenantId);
+    TenantSurfaceResponse addSurface(Set<Port> ports, Set<Address> addresses, Tenant tenant);
 }
