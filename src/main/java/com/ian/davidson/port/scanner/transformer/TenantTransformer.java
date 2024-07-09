@@ -23,6 +23,7 @@ public class TenantTransformer {
 
 
     public Tenant toTenant(final TenantRequest tenantRequest) {
+        //Used in context
         return Tenant.builder()
                 .name(tenantRequest.name())
                 .build();
