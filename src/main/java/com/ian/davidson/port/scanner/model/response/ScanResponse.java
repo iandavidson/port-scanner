@@ -1,24 +1,19 @@
 package com.ian.davidson.port.scanner.model.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.Instant;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @Builder
+@Deprecated
 public class ScanResponse {
     private long id;
     private Instant createdAt;
-
-
-    @JsonProperty("IPs")
-    private Set<Long> Ips;
+    private Set<String> addresses;
 
     private Set<Long> Ports;
 }

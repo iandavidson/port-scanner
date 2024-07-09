@@ -1,8 +1,9 @@
-package com.ian.davidson.port.scanner.service;
+package com.ian.davidson.port.scanner.service.impl;
 
 import com.ian.davidson.port.scanner.model.request.ScanRequest;
 import com.ian.davidson.port.scanner.model.response.ScanResponse;
 import com.ian.davidson.port.scanner.queue.ScanDispatchProducer;
+import com.ian.davidson.port.scanner.service.ScanService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class ScanServiceImpl implements ScanService {
 //    private final ScanQueue scanQueue;
     //jpa repo
 
-    public ScanServiceImpl(final ScanDispatchProducer scanDispatchProducer){
+    public ScanServiceImpl(final ScanDispatchProducer scanDispatchProducer) {
         this.scanDispatchProducer = scanDispatchProducer;
     }
 

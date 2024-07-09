@@ -7,7 +7,7 @@ public class ScanConsumer {
 
     private final ScanQueue scanQueue;
 
-    public ScanConsumer(final ScanQueue scanQueue){
+    public ScanConsumer(final ScanQueue scanQueue) {
         this.scanQueue = scanQueue;
     }
 }

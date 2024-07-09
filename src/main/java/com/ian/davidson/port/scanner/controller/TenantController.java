@@ -2,8 +2,12 @@ package com.ian.davidson.port.scanner.controller;
 
 import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.model.request.TenantRequest;
+import com.ian.davidson.port.scanner.model.request.TenantSurfaceRequest;
 import com.ian.davidson.port.scanner.model.response.TenantResponse;
+import com.ian.davidson.port.scanner.model.response.TenantSurfaceResponse;
 import com.ian.davidson.port.scanner.service.TenantService;
+import com.ian.davidson.port.scanner.transformer.AddressTransformer;
+import com.ian.davidson.port.scanner.transformer.PortTransformer;
 import com.ian.davidson.port.scanner.transformer.TenantTransformer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,10 +25,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class TenantController {
 
     private final TenantTransformer tenantTransformer;
+    private final PortTransformer portTransformer;
+    private final AddressTransformer addressTransformer;
     private final TenantService tenantService;
 
-    public TenantController(final TenantTransformer tenantTransformer, final TenantService tenantService) {
+    public TenantController(final TenantTransformer tenantTransformer,
+                            final PortTransformer portTransformer,
+                            final AddressTransformer addressTransformer,
+                            final TenantService tenantService) {
         this.tenantTransformer = tenantTransformer;
+        this.portTransformer = portTransformer;
+        this.addressTransformer = addressTransformer;
         this.tenantService = tenantService;
     }
 
@@ -39,16 +50,33 @@ public class TenantController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(
-                    tenantTransformer.toTenantResponse(
-                            tenantService.getTenant(tenantId)
-                )
-        );
+                        tenantTransformer.toTenantResponse(
+                                tenantService.getTenant(tenantId)
+                        )
+                );
     }
 
     @DeleteMapping(path = "/{tenantId}")
-    public ResponseEntity<Void> deleteTenant(@PathVariable Long tenantId){
+    public ResponseEntity<Void> deleteTenant(@PathVariable Long tenantId) {
         tenantService.deleteTenant(tenantId);
 
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping(path = "/{tenantId}/surface")
+    public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId, @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
+        Tenant tenant = tenantService.getTenant(tenantId);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(
+                        tenantService.addSurface(
+                                portTransformer.toPorts(
+                                        tenantSurfaceRequest.ports(), tenant),
+                                addressTransformer.toAddresses(
+                                        tenantSurfaceRequest.addresses(), tenant),
+                                tenant));
+
+    }
+
 }
