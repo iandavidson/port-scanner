@@ -1,12 +1,11 @@
 package com.ian.davidson.port.scanner.queue;
 
-import com.ian.davidson.port.scanner.model.response.ScanResponse;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ScanDispatchProducer {
 
-    public void produce(){
+    public void produce() {
 //        try {
 //            scanQueue.waitIsNotFull();
 //            scanQueue.add(scanRequest);

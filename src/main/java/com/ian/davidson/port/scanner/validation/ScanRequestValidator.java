@@ -4,7 +4,6 @@ import com.ian.davidson.port.scanner.model.request.ScanRequest;
 import com.ian.davidson.port.scanner.validation.constraint.ScanRequestValidatorConstraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
 import java.util.Objects;
 
 public class ScanRequestValidator implements ConstraintValidator<ScanRequestValidatorConstraint, ScanRequest> {

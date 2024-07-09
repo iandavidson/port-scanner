@@ -1,7 +1,5 @@
 package com.ian.davidson.port.scanner.transformer;
 
-import com.ian.davidson.port.scanner.model.business.ScanComposition;
-import com.ian.davidson.port.scanner.model.request.ScanRequest;
 import org.springframework.stereotype.Component;
 
 @Component

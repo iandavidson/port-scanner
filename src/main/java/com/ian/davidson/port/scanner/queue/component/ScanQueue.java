@@ -1,9 +1,7 @@
 package com.ian.davidson.port.scanner.queue.component;
 
 
-import com.ian.davidson.port.scanner.model.request.ScanRequest;
 import org.springframework.stereotype.Component;
-import java.util.concurrent.LinkedBlockingQueue;
 
 @Component
 public class ScanQueue {

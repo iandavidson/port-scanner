@@ -1,13 +1,10 @@
 package com.ian.davidson.port.scanner.model.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.Instant;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.Instant;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

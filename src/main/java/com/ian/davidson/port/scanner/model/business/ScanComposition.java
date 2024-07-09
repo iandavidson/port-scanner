@@ -1,10 +1,8 @@
 package com.ian.davidson.port.scanner.model.business;
 
-import lombok.Builder;
-import lombok.Getter;
-
-import java.util.List;
 import java.util.Set;
+import lombok.Builder;
 
 @Builder
-public record ScanComposition(Set<Address> ipAddresses, Set<Port> ports) { }
+public record ScanComposition(Set<Address> ipAddresses, Set<Port> ports) {
+}

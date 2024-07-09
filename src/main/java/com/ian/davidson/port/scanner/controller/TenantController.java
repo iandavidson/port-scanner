@@ -39,14 +39,14 @@ public class TenantController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(
-                    tenantTransformer.toTenantResponse(
-                            tenantService.getTenant(tenantId)
-                )
-        );
+                        tenantTransformer.toTenantResponse(
+                                tenantService.getTenant(tenantId)
+                        )
+                );
     }
 
     @DeleteMapping(path = "/{tenantId}")
-    public ResponseEntity<Void> deleteTenant(@PathVariable Long tenantId){
+    public ResponseEntity<Void> deleteTenant(@PathVariable Long tenantId) {
         tenantService.deleteTenant(tenantId);
 
         return ResponseEntity.noContent().build();

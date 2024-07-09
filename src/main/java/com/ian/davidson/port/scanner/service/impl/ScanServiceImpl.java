@@ -14,7 +14,7 @@ public class ScanServiceImpl implements ScanService {
 //    private final ScanQueue scanQueue;
     //jpa repo
 
-    public ScanServiceImpl(final ScanDispatchProducer scanDispatchProducer){
+    public ScanServiceImpl(final ScanDispatchProducer scanDispatchProducer) {
         this.scanDispatchProducer = scanDispatchProducer;
     }
 

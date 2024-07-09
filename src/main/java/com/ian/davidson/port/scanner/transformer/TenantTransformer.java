@@ -5,10 +5,9 @@ import com.ian.davidson.port.scanner.model.entity.Port;
 import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.model.request.TenantRequest;
 import com.ian.davidson.port.scanner.model.response.TenantResponse;
-import org.springframework.stereotype.Component;
-
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class TenantTransformer {
