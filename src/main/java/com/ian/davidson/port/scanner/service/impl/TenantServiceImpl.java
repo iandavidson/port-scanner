@@ -5,6 +5,8 @@ import com.ian.davidson.port.scanner.repository.TenantRepository;
 import com.ian.davidson.port.scanner.service.TenantService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TenantServiceImpl implements TenantService {
 
@@ -16,7 +18,7 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public Tenant createTenant(Tenant tenant) {
-//        tenantRepository.findByName(tenant.getName())
+        Optional<Tenant> optional = tenantRepository.findByName(tenant.getName());
     }
     @Override
     public Tenant getTenant(Long id) {
