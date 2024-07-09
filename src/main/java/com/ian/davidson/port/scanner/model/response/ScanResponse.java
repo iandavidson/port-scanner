@@ -15,10 +15,7 @@ import java.util.Set;
 public class ScanResponse {
     private long id;
     private Instant createdAt;
-
-
-    @JsonProperty("IPs")
-    private Set<Long> Ips;
+    private Set<String> addresses;
 
     private Set<Long> Ports;
 }

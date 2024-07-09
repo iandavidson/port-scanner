@@ -16,9 +16,8 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public Tenant createTenant(Tenant tenant) {
-        return null;
+//        tenantRepository.findByName(tenant.getName())
     }
-
     @Override
     public Tenant getTenant(Long id) {
         return null;
