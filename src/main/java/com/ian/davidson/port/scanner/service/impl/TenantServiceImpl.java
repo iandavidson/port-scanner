@@ -1,7 +1,8 @@
-package com.ian.davidson.port.scanner.service;
+package com.ian.davidson.port.scanner.service.impl;
 
 import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.repository.TenantRepository;
+import com.ian.davidson.port.scanner.service.TenantService;
 import org.springframework.stereotype.Service;
 
 @Service

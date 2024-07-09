@@ -6,6 +6,5 @@ import lombok.Getter;
 import java.util.List;
 import java.util.Set;
 
-@Getter
 @Builder
 public record ScanComposition(Set<Address> ipAddresses, Set<Port> ports) { }
