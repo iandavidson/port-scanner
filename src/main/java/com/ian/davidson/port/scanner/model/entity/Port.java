@@ -21,7 +21,7 @@ public class Port {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final Long id;
+    private Long id;
 
     private final Integer port;
 

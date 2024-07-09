@@ -7,5 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Port {
     private final Long value;
-    private final Long tenantId;
+    private Long tenantId;
 }

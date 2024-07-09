@@ -12,5 +12,5 @@ public class Address {
             regexp = "^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$",
             message = "Address does not conform to valid IP structure")
     private final String value;
-    private final Long tenantId;
+    private Long tenantId;
 }

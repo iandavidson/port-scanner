@@ -13,12 +13,31 @@ import java.util.stream.Collectors;
 @Component
 public class TenantTransformer {
 
+    private final AddressTransformer addressTransformer;
+    private final PortTransformer portTransformer;
+
+    public TenantTransformer(final AddressTransformer addressTransformer,
+                             final PortTransformer portTransformer){
+        this.addressTransformer = addressTransformer;
+        this.portTransformer = portTransformer;
+    }
+
+
+    public Tenant toShallowTenant(final TenantRequest tenantRequest){
+        return Tenant.builder()
+                .name(tenantRequest.name())
+                .build();
+    }
+
     public Tenant toTenant(final TenantRequest tenantRequest){
-        Set<Address> addresses = tenantRequest.addresses().stream().map(raw -> {
+        Set<Address> addresses = addressTransformer.toAddresses(tenantRequest.addresses());
+        Set<Port> ports = portTransformer.toPorts(tenantRequest.ports());
 
-        }).collect(Collectors.toSet());
-
-        return Tenant.builder().name(tenantRequest.name()).build();
+        return Tenant.builder()
+                .name(tenantRequest.name())
+                .addresses(addresses)
+                .ports(ports)
+                .build();
     }
 
     public TenantResponse toTenantResponse(final Tenant tenant){
