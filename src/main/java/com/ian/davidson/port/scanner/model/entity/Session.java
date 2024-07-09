@@ -28,5 +28,4 @@ public class Session {
     @CreationTimestamp
     @Column(name = "creation_date")
     private final LocalDateTime creationDate;
-
 }

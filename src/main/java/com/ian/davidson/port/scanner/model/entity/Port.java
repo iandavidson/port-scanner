@@ -25,11 +25,12 @@ public class Port {
 
     private final Integer port;
 
-    @ManyToOne
-    private final Tenant tenant;
-
     @CreationTimestamp
     @Column(name = "creation_date")
     private final LocalDateTime creationDate;
+
+    @ManyToOne
+    private final Tenant tenant;
+
 
 }

@@ -28,10 +28,11 @@ public class Address {
             message = "Address does not conform to valid IP structure")
     private final String address;
 
-    @ManyToOne
-    private final Tenant tenant;
-
     @CreationTimestamp
     @Column(name = "creation_date")
     private final LocalDateTime creationDate;
+
+    @ManyToOne
+    private final Tenant tenant;
+
 }

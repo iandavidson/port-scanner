@@ -25,7 +25,7 @@ public class ScanResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long id;
 
-    private final String ip;
+    private final String address;
     private final Integer port;
 
     @Column(name = "time_out")
@@ -33,8 +33,10 @@ public class ScanResult {
     private final Boolean exposed;
     private final ConnectionStatus status;
 
+    private final Long tenantId;
+
     @ManyToOne
-    private final Tenant tenant;
+    private final Session session;
 
     @CreationTimestamp
     @Column(name = "creation_date")
