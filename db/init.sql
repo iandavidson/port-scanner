@@ -1,3 +1,6 @@
+create schema if not exists port_scanner;
+use port_scanner;
+
 create table if not exists tenant (
     id serial primary key,
     name varchar(50) unique,

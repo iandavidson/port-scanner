@@ -14,6 +14,7 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
@@ -32,9 +33,11 @@ public class Tenant {
     private final String name;
 
     @OneToMany
+    @ToString.Exclude
     private Set<Address> addresses;
 
     @OneToMany
+    @ToString.Exclude
     private Set<Port> ports;
 
     @CreationTimestamp

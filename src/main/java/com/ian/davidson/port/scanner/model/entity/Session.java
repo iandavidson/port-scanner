@@ -7,7 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +26,9 @@ public class Session {
 
     @ManyToOne
     private final Tenant tenant;
+
+    @OneToMany
+    private final Set<ScanResult> scanResultSet;
 
     @CreationTimestamp
     @Column(name = "creation_date")
