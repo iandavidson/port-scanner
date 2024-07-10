@@ -12,7 +12,6 @@ create table if not exists port (
     foreign key (tenant_id) references tenant(id)
 );
 
-
 create table if not exists address (
     id serial primary key,
     address varchar(25) not null,
