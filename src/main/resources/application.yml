@@ -6,14 +6,12 @@ server:
   servlet:
     context-path: /scanner
 
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?current_schema=port_scanner
     username: postgres
     password:
     driver-class-name: org.postgresql.Driver
-
     hikari:
         connectionTimeout: 20000
         maximumPoolSize: 10
@@ -27,6 +25,9 @@ management:
     web:
       exposure:
         include: '*'
+
+scan:
+  default-timeout: 20000
 
 logging:
   level:
