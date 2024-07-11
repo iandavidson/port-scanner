@@ -55,6 +55,7 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public TenantSurfaceResponse addSurface(Set<Port> ports, Set<Address> addresses, Tenant tenant) {
-
+        throw new IllegalStateException("not implemented");
     }
+
 }

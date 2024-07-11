@@ -2,34 +2,45 @@ package com.ian.davidson.port.scanner.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @AllArgsConstructor
 @Builder
-@Entity(name = "port")
+@Table(name = "port")
+@Entity
+@ToString
 public class Port {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private final Integer port;
-
-    @ManyToOne
-    private final Tenant tenant;
+    @Column(nullable = false)
+    @NotNull
+    private Integer port;
 
     @CreationTimestamp
     @Column(name = "creation_date")
-    private final LocalDateTime creationDate;
+    private LocalDateTime creationDate;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tenant_id")
+    @NotNull
+    private Tenant tenant;
+
 
 }

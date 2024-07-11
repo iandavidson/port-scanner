@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
@@ -29,12 +31,16 @@ public class Tenant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private final String name;
+    @Column(unique = true, nullable = false)
+    @NotNull
+    private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "tenant")
+    @ToString.Exclude
     private Set<Address> addresses;
 
-    @OneToMany
+    @OneToMany(mappedBy = "tenant")
+    @ToString.Exclude
     private Set<Port> ports;
 
     @CreationTimestamp

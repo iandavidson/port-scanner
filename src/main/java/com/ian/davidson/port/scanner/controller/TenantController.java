@@ -63,6 +63,8 @@ public class TenantController {
         return ResponseEntity.noContent().build();
     }
 
+    //TODO: get all tenants
+
     @PostMapping(path = "/{tenantId}/surface")
     public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId, @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
         Tenant tenant = tenantService.getTenant(tenantId);

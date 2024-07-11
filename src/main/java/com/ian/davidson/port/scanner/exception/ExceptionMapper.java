@@ -1,14 +1,12 @@
 package com.ian.davidson.port.scanner.exception;
 
 import jakarta.validation.ValidationException;
-import java.util.Locale;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
@@ -30,43 +28,55 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ResourceConflictException.class)
-    public ResponseEntity<?> handleResourceConflict(final ResourceConflictException resourceConflictException){
+    public ResponseEntity<?> handleResourceConflict(final ResourceConflictException resourceConflictException) {
         log(resourceConflictException);
 
         return createResponseEntity(
-            ApiError.builder()
-                    .status(HttpStatus.CONFLICT)
-                    .message(resourceConflictException.getMessage())
-                    .build()
+                ApiError.builder()
+                        .status(HttpStatus.CONFLICT)
+                        .message(resourceConflictException.getMessage())
+                        .build()
         );
     }
 
     @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<?> handleValidationException(final ValidationException validationException){
+    public ResponseEntity<?> handleValidationException(final ValidationException validationException) {
         log(validationException);
 
         return createResponseEntity(
-            ApiError.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(validationException.getMessage())
-                    .build()
+                ApiError.builder()
+                        .status(HttpStatus.BAD_REQUEST)
+                        .message(validationException.getMessage())
+                        .build()
         );
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<?> handleBadRequestException(final BadRequestException badRequestException){
+    public ResponseEntity<?> handleBadRequestException(final BadRequestException badRequestException) {
         log(badRequestException);
 
         return createResponseEntity(
-            ApiError.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(badRequestException.getMessage())
-                    .build()
+                ApiError.builder()
+                        .status(HttpStatus.BAD_REQUEST)
+                        .message(badRequestException.getMessage())
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<?> handleIllegalStateException(final IllegalStateException illegalStateException) {
+        log(illegalStateException);
+
+        return createResponseEntity(
+                ApiError.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .message(illegalStateException.getMessage())
+                        .build()
         );
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> handleSystemError(final RuntimeException runtimeException) {
+    public ResponseEntity<?> handleGenericRuntimeException(final RuntimeException runtimeException) {
         log(runtimeException);
 
         return createResponseEntity(
