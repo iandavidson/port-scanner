@@ -30,7 +30,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant createTenant(Tenant tenant) {
+    public Tenant createTenant(final Tenant tenant) {
         Optional<Tenant> optional = tenantRepository.findByName(tenant.getName());
 
         if (optional.isPresent()) {
@@ -43,14 +43,18 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant getTenant(Long id) {
-        return tenantRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No tenant found at id >" + id + "<"));
+    public Tenant getTenant(final Long tenantId) {
+        return tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new ResourceNotFoundException("No tenant found at id >" + tenantId + "<"));
     }
 
     @Override
-    public void deleteTenant(Long id) {
-        tenantRepository.deleteById(id);
+    public void deleteTenant(final Long tenantId) {
+        portRepository.deleteByTenantId(tenantId);
+        addressRepository.deleteByTenantId(tenantId);
+        //delete sessions
+
+        tenantRepository.deleteById(tenantId);
     }
 
     @Override

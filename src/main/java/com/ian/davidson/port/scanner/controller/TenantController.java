@@ -29,10 +29,7 @@ public class TenantController {
     private final AddressTransformer addressTransformer;
     private final TenantService tenantService;
 
-    public TenantController(final TenantTransformer tenantTransformer,
-                            final PortTransformer portTransformer,
-                            final AddressTransformer addressTransformer,
-                            final TenantService tenantService) {
+    public TenantController(final TenantTransformer tenantTransformer, final PortTransformer portTransformer, final AddressTransformer addressTransformer, final TenantService tenantService) {
         this.tenantTransformer = tenantTransformer;
         this.portTransformer = portTransformer;
         this.addressTransformer = addressTransformer;
@@ -41,19 +38,12 @@ public class TenantController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TenantResponse> createTenant(@RequestBody TenantRequest tenantRequest) {
-        Tenant tenant = tenantService.createTenant(tenantTransformer.toTenant(tenantRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(tenantTransformer.toTenantResponse(tenant));
+        return ResponseEntity.status(HttpStatus.CREATED).body(tenantTransformer.toTenantResponse(tenantService.createTenant(tenantTransformer.toTenant(tenantRequest))));
     }
 
     @GetMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TenantResponse> getTenant(@PathVariable Long tenantId) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(
-                        tenantTransformer.toTenantResponse(
-                                tenantService.getTenant(tenantId)
-                        )
-                );
+        return ResponseEntity.status(HttpStatus.OK).body(tenantTransformer.toTenantResponse(tenantService.getTenant(tenantId)));
     }
 
     @DeleteMapping(path = "/{tenantId}")
@@ -69,15 +59,7 @@ public class TenantController {
     public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId, @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
         Tenant tenant = tenantService.getTenant(tenantId);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(
-                        tenantService.addSurface(
-                                portTransformer.toPorts(
-                                        tenantSurfaceRequest.ports(), tenant),
-                                addressTransformer.toAddresses(
-                                        tenantSurfaceRequest.addresses(), tenant),
-                                tenant));
+        return ResponseEntity.status(HttpStatus.CREATED).body(tenantService.addSurface(portTransformer.toPorts(tenantSurfaceRequest.ports(), tenant), addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenant), tenant));
 
     }
 
