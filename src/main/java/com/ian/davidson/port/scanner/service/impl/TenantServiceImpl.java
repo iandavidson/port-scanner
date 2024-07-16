@@ -13,6 +13,7 @@ import com.ian.davidson.port.scanner.service.AddressService;
 import com.ian.davidson.port.scanner.service.PortService;
 import com.ian.davidson.port.scanner.service.SessionService;
 import com.ian.davidson.port.scanner.service.TenantService;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,11 @@ public class TenantServiceImpl implements TenantService {
     public Tenant getTenant(final Long tenantId) {
         return tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new ResourceNotFoundException("No tenant found at id >" + tenantId + "<"));
+    }
+
+    @Override
+    public List<Tenant> getAllTenants() {
+        return tenantRepository.findAll();
     }
 
     @Override

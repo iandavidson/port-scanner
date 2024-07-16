@@ -9,6 +9,7 @@ import com.ian.davidson.port.scanner.service.TenantService;
 import com.ian.davidson.port.scanner.transformer.AddressTransformer;
 import com.ian.davidson.port.scanner.transformer.PortTransformer;
 import com.ian.davidson.port.scanner.transformer.TenantTransformer;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -53,14 +54,22 @@ public class TenantController {
         return ResponseEntity.noContent().build();
     }
 
-    //TODO: get all tenants
-
     @PostMapping(path = "/{tenantId}/surface")
     public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId, @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
         Tenant tenant = tenantService.getTenant(tenantId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(tenantService.addSurface(portTransformer.toPorts(tenantSurfaceRequest.ports(), tenant), addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenant), tenant));
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TenantResponse>> getAllTenants() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(tenantService.getAllTenants().stream()
+                        .map(tenantTransformer::toTenantResponse)
+                        .toList()
+                );
     }
 
 }
