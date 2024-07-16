@@ -11,6 +11,7 @@ import com.ian.davidson.port.scanner.repository.PortRepository;
 import com.ian.davidson.port.scanner.repository.TenantRepository;
 import com.ian.davidson.port.scanner.service.AddressService;
 import com.ian.davidson.port.scanner.service.PortService;
+import com.ian.davidson.port.scanner.service.SessionService;
 import com.ian.davidson.port.scanner.service.TenantService;
 import java.util.Optional;
 import java.util.Set;
@@ -22,13 +23,16 @@ public class TenantServiceImpl implements TenantService {
     private final TenantRepository tenantRepository;
     private final AddressService addressService;
     private final PortService portService;
+    private final SessionService sessionService;
 
     public TenantServiceImpl(final TenantRepository tenantRepository,
                              final AddressService addressService,
-                             final PortService portService) {
+                             final PortService portService,
+                             final SessionService sessionService) {
         this.tenantRepository = tenantRepository;
         this.addressService = addressService;
         this.portService = portService;
+        this.sessionService = sessionService;
     }
 
     @Override
@@ -52,11 +56,9 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public void deleteTenant(final Long tenantId) {
+        sessionService.deleteSessionsByTenantId(tenantId);
         portService.deletePortsByTenantId(tenantId);
         addressService.deleteAddressesByTenantId(tenantId);
-        //delete sessions
-
-
         tenantRepository.deleteById(tenantId);
     }
 

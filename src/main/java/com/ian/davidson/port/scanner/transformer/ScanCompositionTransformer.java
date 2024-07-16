@@ -3,6 +3,7 @@ package com.ian.davidson.port.scanner.transformer;
 import org.springframework.stereotype.Component;
 
 @Component
+@Deprecated
 public class ScanCompositionTransformer {
 //    public ScanComposition toScanCompositionTransformer(final ScanRequest scanRequest){
 //       /*

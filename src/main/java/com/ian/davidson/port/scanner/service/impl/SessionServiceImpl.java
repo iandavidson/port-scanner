@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SessionServiceImpl implements SessionService {
-
     private final SessionRepository sessionRepository;
 
     public SessionServiceImpl(final SessionRepository sessionRepository){

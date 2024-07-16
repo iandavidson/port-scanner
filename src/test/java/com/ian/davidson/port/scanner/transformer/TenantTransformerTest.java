@@ -62,4 +62,22 @@ public class TenantTransformerTest {
         assertThat(tenantResponse.ports()).hasSize(3);
         assertThat(tenantResponse.addresses()).hasSize(3);
     }
+
+    @Test
+    void toTenantResponse_noPortsNoAddresses_success(){
+        Tenant tenant = mock(Tenant.class);
+        when(tenant.getId()).thenReturn(1L);
+        when(tenant.getName()).thenReturn("name");
+        when(tenant.getPorts()).thenReturn(null);
+        when(tenant.getAddresses()).thenReturn(null);
+
+        TenantTransformer tenantTransformer = new TenantTransformer();
+        TenantResponse tenantResponse = tenantTransformer.toTenantResponse(tenant);
+
+        assertThat(tenantResponse).isNotNull();
+        assertThat(tenantResponse.id()).isEqualTo(1L);
+        assertThat(tenantResponse.name()).isEqualTo("name");
+        assertThat(tenantResponse.ports()).isEmpty();
+        assertThat(tenantResponse.addresses()).isEmpty();
+    }
 }
