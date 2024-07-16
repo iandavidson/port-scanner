@@ -1,13 +1,12 @@
 create schema if not exists port_scanner;
-use port_scanner;
 
-create table if not exists tenant (
+create table if not exists port_scanner.tenant (
     id serial primary key,
     name varchar(50) unique,
     creation_date date not null
 );
 
-create table if not exists port (
+create table if not exists port_scanner.port (
     id serial primary key,
     port integer not null,
     creation_date date not null,
@@ -15,7 +14,7 @@ create table if not exists port (
     foreign key (tenant_id) references tenant(id)
 );
 
-create table if not exists address (
+create table if not exists port_scanner.address (
     id serial primary key,
     address varchar(25) not null,
     creation_date date not null,
@@ -23,14 +22,14 @@ create table if not exists address (
     foreign key (tenant_id) references tenant(id)
 );
 
-create table if not exists session (
+create table if not exists port_scanner.session (
     id serial primary key,
     creation_date date not null,
     tenant_id integer not null,
     foreign key (tenant_id) references tenant(id)
 );
 
-create table if not exists scan_result (
+create table if not exists port_scanner.scan_result (
 	 id SERIAL primary key,
      address varchar(25) not null,
 	 port integer not null,
