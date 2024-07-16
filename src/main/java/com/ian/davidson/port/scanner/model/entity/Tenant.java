@@ -15,11 +15,13 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Table(name = "tenant",
         uniqueConstraints =
