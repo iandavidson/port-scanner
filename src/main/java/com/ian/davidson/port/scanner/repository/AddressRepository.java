@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface AddressRepository extends JpaRepository<Address, Long> {
     @Modifying
     @Query(value = "delete from address where tenant_id = (:tenantId) ", nativeQuery = true)
-    void deleteByTenantId(@Param("tenantId") Long tenantId);
+    void deleteAllByTenantId(@Param("tenantId") Long tenantId);
 }

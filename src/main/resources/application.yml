@@ -16,8 +16,14 @@ spring:
       connectionTimeout: 20000
       maximumPoolSize: 10
   jpa:
+    open-in-view: false
     hibernate:
       use-new-id-generator-mappings: false
+
+springdoc:
+  swagger-ui:
+    packagesToScan: com.ian.davidson.port.scanner.controller
+    pathsToMatch: /tenant/**
 
 management:
   server.port: 9080

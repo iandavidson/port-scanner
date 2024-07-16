@@ -17,11 +17,11 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void addAddresses(Set<Address> addresses) {
-
+        addressRepository.saveAll(addresses);
     }
 
     @Override
     public void deleteAddressesByTenantId(Long tenantId) {
-
+        addressRepository.deleteAllByTenantId(tenantId);
     }
 }

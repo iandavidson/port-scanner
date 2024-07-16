@@ -17,11 +17,11 @@ public class PortServiceImpl implements PortService {
 
     @Override
     public void addPorts(Set<Port> ports) {
-
+        portRepository.saveAll(ports);
     }
 
     @Override
     public void deletePortsByTenantId(Long tenantId) {
-
+        portRepository.deleteAllByTenantId(tenantId);
     }
 }

@@ -12,5 +12,5 @@ public interface PortRepository extends JpaRepository<Port, Long> {
 
     @Modifying
     @Query(value = "delete from port where tenant_id = (:tenantId) ", nativeQuery = true)
-    void deleteByTenantId(@Param("tenantId") Long tenantId);
+    void deleteAllByTenantId(@Param("tenantId") Long tenantId);
 }
