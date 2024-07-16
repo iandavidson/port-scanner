@@ -30,7 +30,8 @@ public class TenantController {
     private final AddressTransformer addressTransformer;
     private final TenantService tenantService;
 
-    public TenantController(final TenantTransformer tenantTransformer, final PortTransformer portTransformer, final AddressTransformer addressTransformer, final TenantService tenantService) {
+    public TenantController(final TenantTransformer tenantTransformer, final PortTransformer portTransformer,
+                            final AddressTransformer addressTransformer, final TenantService tenantService) {
         this.tenantTransformer = tenantTransformer;
         this.portTransformer = portTransformer;
         this.addressTransformer = addressTransformer;
@@ -55,11 +56,16 @@ public class TenantController {
     }
 
     @PostMapping(path = "/{tenantId}/surface")
-    public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId, @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
+    public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId,
+                                                                    @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
         Tenant tenant = tenantService.getTenant(tenantId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(tenantService.addSurface(portTransformer.toPorts(tenantSurfaceRequest.ports(), tenant), addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenant), tenant));
-
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(tenantService.addSurface(
+                        portTransformer.toPorts(tenantSurfaceRequest.ports(), tenant),
+                        addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenant),
+                        tenant));
     }
 
     @GetMapping

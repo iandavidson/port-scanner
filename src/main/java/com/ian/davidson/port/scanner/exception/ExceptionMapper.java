@@ -88,7 +88,7 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
 
 
     private void log(final Exception exception) {
-        final var logStatement = "exception-mapper cause={}, exception={}";
+        final String logStatement = "exception-mapper cause={}, exception={}";
         if (exception instanceof IllegalArgumentException
                 || exception instanceof ResourceNotFoundException) {
             log.warn(logStatement, exception.getMessage(), exception);
