@@ -21,7 +21,7 @@ Multi-threaded approach to execute atomic port scanning actions.
 Threads will then write to data structure containing representation of Scanning Task  
 
 
-#### Default set of ports to scan :
+#### Default set of ports to scan:
 ```text
 Port 20 (UDP) — File Transfer Protocol (FTP)
 Port 22 (TCP) — Secure Shell (SSH)
@@ -31,11 +31,16 @@ Port 80 (TCP) — HTTP
 Port 443 (TCP) — HTTPS
 ```
 
-#### Scan range of IPs
+#### Default IPs to scan:
+```text
+208.67.222.222 and 208.67.220.220 (OpenDNS)
+1.1.1.1 and 1.0.0.1 (Cloudflare)
+8.8.8.8 and 8.8.4.4 (Google DNS)
+```
 
 ### Data storage:
-- Planning on using some sort of temporary relational storage like h2 for now. Eventually use data source outside of application
-
+- Using Postgresql locally, no password.
+- Check folder "db" for initialization of schema 
 
 
 ## Later on ideas:

@@ -9,7 +9,11 @@ import com.ian.davidson.port.scanner.model.response.TenantSurfaceResponse;
 import com.ian.davidson.port.scanner.repository.AddressRepository;
 import com.ian.davidson.port.scanner.repository.PortRepository;
 import com.ian.davidson.port.scanner.repository.TenantRepository;
+import com.ian.davidson.port.scanner.service.AddressService;
+import com.ian.davidson.port.scanner.service.PortService;
+import com.ian.davidson.port.scanner.service.SessionService;
 import com.ian.davidson.port.scanner.service.TenantService;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.stereotype.Service;
@@ -18,15 +22,18 @@ import org.springframework.stereotype.Service;
 public class TenantServiceImpl implements TenantService {
 
     private final TenantRepository tenantRepository;
-    private final AddressRepository addressRepository;
-    private final PortRepository portRepository;
+    private final AddressService addressService;
+    private final PortService portService;
+    private final SessionService sessionService;
 
     public TenantServiceImpl(final TenantRepository tenantRepository,
-                             final AddressRepository addressRepository,
-                             final PortRepository portRepository) {
+                             final AddressService addressService,
+                             final PortService portService,
+                             final SessionService sessionService) {
         this.tenantRepository = tenantRepository;
-        this.addressRepository = addressRepository;
-        this.portRepository = portRepository;
+        this.addressService = addressService;
+        this.portService = portService;
+        this.sessionService = sessionService;
     }
 
     @Override
@@ -49,11 +56,15 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public void deleteTenant(final Long tenantId) {
-        portRepository.deleteByTenantId(tenantId);
-        addressRepository.deleteByTenantId(tenantId);
-        //delete sessions
+    public List<Tenant> getAllTenants() {
+        return tenantRepository.findAll();
+    }
 
+    @Override
+    public void deleteTenant(final Long tenantId) {
+        sessionService.deleteSessionsByTenantId(tenantId);
+        portService.deletePortsByTenantId(tenantId);
+        addressService.deleteAddressesByTenantId(tenantId);
         tenantRepository.deleteById(tenantId);
     }
 

@@ -11,15 +11,18 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Table(name = "tenant",
         uniqueConstraints =
@@ -37,11 +40,13 @@ public class Tenant {
 
     @OneToMany(mappedBy = "tenant")
     @ToString.Exclude
-    private Set<Address> addresses;
+    @Builder.Default
+    private Set<Address> addresses = new HashSet<>();
 
     @OneToMany(mappedBy = "tenant")
     @ToString.Exclude
-    private Set<Port> ports;
+    @Builder.Default
+    private Set<Port> ports = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "creation_date")

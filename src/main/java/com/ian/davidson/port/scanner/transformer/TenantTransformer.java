@@ -5,6 +5,7 @@ import com.ian.davidson.port.scanner.model.entity.Port;
 import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.model.request.TenantRequest;
 import com.ian.davidson.port.scanner.model.response.TenantResponse;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
@@ -41,8 +42,8 @@ public class TenantTransformer {
 //    }
 
     public TenantResponse toTenantResponse(final Tenant tenant) {
-        Set<Integer> ports = tenant.getPorts().stream().map(Port::getPort).collect(Collectors.toSet());
-        Set<String> addresses = tenant.getAddresses().stream().map(Address::getAddress).collect(Collectors.toSet());
+        Set<Integer> ports = tenant.getPorts() != null ? tenant.getPorts().stream().map(Port::getPort).collect(Collectors.toSet()) : new HashSet<>();
+        Set<String> addresses = tenant.getAddresses() != null ? tenant.getAddresses().stream().map(Address::getAddress).collect(Collectors.toSet()) : new HashSet<>();
 
         return TenantResponse.builder()
                 .id(tenant.getId())
