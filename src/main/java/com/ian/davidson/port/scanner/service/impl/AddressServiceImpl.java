@@ -25,8 +25,8 @@ public class AddressServiceImpl implements AddressService {
         addressRepository.deleteAllByTenantId(tenantId);
     }
 
-    @Override
-    public void deleteByTenant(Tenant tenant) {
-        addressRepository.deleteByTenant(tenant);
-    }
+//    @Override
+//    public void deleteByTenant(Tenant tenant) {
+//        addressRepository.deleteByTenant(tenant);
+//    }
 }

@@ -1,39 +1,37 @@
 package com.ian.davidson.port.scanner.transformer;
 
 import com.ian.davidson.port.scanner.model.entity.Port;
-import com.ian.davidson.port.scanner.model.entity.Tenant;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 public class PortTransformerTest {
 
     @Test
     void toPort_success() {
         Integer port = 3306;
-        Tenant tenant = mock(Tenant.class);
+        Long tenantId = 1L;
 
         PortTransformer portTransformer = new PortTransformer();
-        Port result = portTransformer.toPort(port, tenant);
+        Port result = portTransformer.toPort(port, tenantId);
 
         assertThat(result).isNotNull();
         assertThat(result.getPort()).isEqualTo(port);
-        assertThat(result.getTenant()).isNotNull();
+        assertThat(result.getTenantId()).isEqualTo(tenantId);
     }
 
     @Test
     void toAddresses_success() {
         Set<Integer> ports = Set.of(25, 443, 3306);
-        Tenant tenant = mock(Tenant.class);
+        Long tenantId = 1L;
 
         PortTransformer portTransformer = new PortTransformer();
-        Set<Port> results = portTransformer.toPorts(ports, tenant);
+        Set<Port> results = portTransformer.toPorts(ports, tenantId);
 
         assertThat(results).isNotEmpty();
         assertThat(results.size()).isEqualTo(3);
         for (Port port : results) {
-            assertThat(port.getTenant()).isNotNull();
+            assertThat(port.getTenantId()).isEqualTo(tenantId);
         }
     }
 }

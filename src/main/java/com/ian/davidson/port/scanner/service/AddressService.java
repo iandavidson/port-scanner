@@ -7,5 +7,5 @@ import java.util.Set;
 public interface AddressService {
     void addAddresses(Set<Address> addresses);
     void deleteAddressesByTenantId(Long tenantId);
-    void deleteByTenant(Tenant tenant);
+//    void deleteByTenant(Tenant tenant);
 }

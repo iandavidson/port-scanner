@@ -7,5 +7,5 @@ import java.util.Set;
 public interface PortService {
     void addPorts(Set<Port> ports);
     void deletePortsByTenantId(Long tenantId);
-    void deleteByTenant(Tenant tenant);
+//    void deleteByTenant(Tenant tenant);
 }

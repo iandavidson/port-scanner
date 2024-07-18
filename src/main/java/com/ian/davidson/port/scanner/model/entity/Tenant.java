@@ -39,16 +39,12 @@ public class Tenant {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "tenant", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "tenantId", fetch = FetchType.EAGER)
     @ToString.Exclude
-//    @Builder.Default
-//    private Set<Address> addresses = new HashSet<>();
     private Set<Address> addresses;
 
-    @OneToMany(mappedBy = "tenant", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "tenantId", fetch = FetchType.EAGER)
     @ToString.Exclude
-//    @Builder.Default
-//    private Set<Port> ports = new HashSet<>();
     private Set<Port> ports;
 
     @CreationTimestamp

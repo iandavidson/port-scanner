@@ -26,8 +26,8 @@ public class PortServiceImpl implements PortService {
         portRepository.deleteAllByTenantId(tenantId);
     }
 
-    @Override
-    public void deleteByTenant(Tenant tenant) {
-        portRepository.deleteByTenant(tenant);
-    }
+//    @Override
+//    public void deleteByTenant(Tenant tenant) {
+//        portRepository.deleteByTenant(tenant);
+//    }
 }
