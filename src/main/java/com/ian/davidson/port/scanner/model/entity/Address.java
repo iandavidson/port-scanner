@@ -43,6 +43,8 @@ public class Address {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
+
+    //TODO: should only know about tenantId not the whole obj ref
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tenant_id")
     @NotNull

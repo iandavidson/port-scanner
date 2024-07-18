@@ -3,6 +3,7 @@ package com.ian.davidson.port.scanner.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,15 +39,17 @@ public class Tenant {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "tenant")
+    @OneToMany(mappedBy = "tenant", fetch = FetchType.EAGER)
     @ToString.Exclude
-    @Builder.Default
-    private Set<Address> addresses = new HashSet<>();
+//    @Builder.Default
+//    private Set<Address> addresses = new HashSet<>();
+    private Set<Address> addresses;
 
-    @OneToMany(mappedBy = "tenant")
+    @OneToMany(mappedBy = "tenant", fetch = FetchType.EAGER)
     @ToString.Exclude
-    @Builder.Default
-    private Set<Port> ports = new HashSet<>();
+//    @Builder.Default
+//    private Set<Port> ports = new HashSet<>();
+    private Set<Port> ports;
 
     @CreationTimestamp
     @Column(name = "creation_date")

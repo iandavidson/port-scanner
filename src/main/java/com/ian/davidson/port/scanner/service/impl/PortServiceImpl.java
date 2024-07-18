@@ -1,6 +1,7 @@
 package com.ian.davidson.port.scanner.service.impl;
 
 import com.ian.davidson.port.scanner.model.entity.Port;
+import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.repository.PortRepository;
 import com.ian.davidson.port.scanner.service.PortService;
 import java.util.Set;
@@ -23,5 +24,10 @@ public class PortServiceImpl implements PortService {
     @Override
     public void deletePortsByTenantId(Long tenantId) {
         portRepository.deleteAllByTenantId(tenantId);
+    }
+
+    @Override
+    public void deleteByTenant(Tenant tenant) {
+        portRepository.deleteByTenant(tenant);
     }
 }

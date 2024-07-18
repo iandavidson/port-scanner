@@ -5,9 +5,6 @@ import com.ian.davidson.port.scanner.exception.ResourceNotFoundException;
 import com.ian.davidson.port.scanner.model.entity.Address;
 import com.ian.davidson.port.scanner.model.entity.Port;
 import com.ian.davidson.port.scanner.model.entity.Tenant;
-import com.ian.davidson.port.scanner.model.response.TenantSurfaceResponse;
-import com.ian.davidson.port.scanner.repository.AddressRepository;
-import com.ian.davidson.port.scanner.repository.PortRepository;
 import com.ian.davidson.port.scanner.repository.TenantRepository;
 import com.ian.davidson.port.scanner.service.AddressService;
 import com.ian.davidson.port.scanner.service.PortService;
@@ -62,15 +59,26 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public void deleteTenant(final Long tenantId) {
-        sessionService.deleteSessionsByTenantId(tenantId);
-        portService.deletePortsByTenantId(tenantId);
-        addressService.deleteAddressesByTenantId(tenantId);
+        Tenant tenant = getTenant(tenantId);
+
+//        sessionService.deleteSessionsByTenantId(tenantId);
+        sessionService.deleteByTenant(tenant);
+
+//        portService.deletePortsByTenantId(tenantId);
+        portService.deleteByTenant(tenant);
+
+//        addressService.deleteAddressesByTenantId(tenantId);
+        addressService.deleteByTenant(tenant);
+
         tenantRepository.deleteById(tenantId);
     }
 
     @Override
-    public TenantSurfaceResponse addSurface(Set<Port> ports, Set<Address> addresses, Tenant tenant) {
-        throw new IllegalStateException("not implemented");
+    public Tenant addSurface(Set<Port> ports, Set<Address> addresses, Tenant tenant) {
+        portService.addPorts(ports);
+        addressService.addAddresses(addresses);
+
+        return getTenant(tenant.getId());
     }
 
 }

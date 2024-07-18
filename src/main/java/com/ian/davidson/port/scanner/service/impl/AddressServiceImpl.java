@@ -1,6 +1,7 @@
 package com.ian.davidson.port.scanner.service.impl;
 
 import com.ian.davidson.port.scanner.model.entity.Address;
+import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.repository.AddressRepository;
 import com.ian.davidson.port.scanner.service.AddressService;
 import java.util.Set;
@@ -22,5 +23,10 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void deleteAddressesByTenantId(Long tenantId) {
         addressRepository.deleteAllByTenantId(tenantId);
+    }
+
+    @Override
+    public void deleteByTenant(Tenant tenant) {
+        addressRepository.deleteByTenant(tenant);
     }
 }

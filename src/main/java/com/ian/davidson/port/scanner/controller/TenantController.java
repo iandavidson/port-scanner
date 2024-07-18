@@ -50,22 +50,27 @@ public class TenantController {
 
     @DeleteMapping(path = "/{tenantId}")
     public ResponseEntity<Void> deleteTenant(@PathVariable Long tenantId) {
+
         tenantService.deleteTenant(tenantId);
 
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping(path = "/{tenantId}/surface")
-    public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId,
+    public ResponseEntity<TenantResponse> addSurfaceAtTenant(@PathVariable Long tenantId,
                                                                     @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
         Tenant tenant = tenantService.getTenant(tenantId);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(tenantService.addSurface(
-                        portTransformer.toPorts(tenantSurfaceRequest.ports(), tenant),
-                        addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenant),
-                        tenant));
+                .body(tenantTransformer.toTenantResponse(
+
+                        tenantService.addSurface(
+                            portTransformer.toPorts(tenantSurfaceRequest.ports(), tenant),
+                            addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenant),
+                            tenant
+                        )
+                ));
     }
 
     @GetMapping
