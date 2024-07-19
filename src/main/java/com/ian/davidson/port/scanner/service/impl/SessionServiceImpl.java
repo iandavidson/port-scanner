@@ -1,6 +1,7 @@
 package com.ian.davidson.port.scanner.service.impl;
 
 import com.ian.davidson.port.scanner.model.entity.Session;
+import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.repository.SessionRepository;
 import com.ian.davidson.port.scanner.service.SessionService;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,10 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public void deleteSessionsByTenantId(Long tenantId) {
         sessionRepository.deleteAllByTenantId(tenantId);
+    }
+
+    @Override
+    public void deleteByTenant(Tenant tenant) {
+        sessionRepository.deleteByTenant(tenant);
     }
 }

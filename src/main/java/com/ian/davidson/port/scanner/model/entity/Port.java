@@ -39,10 +39,6 @@ public class Port {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tenant_id")
-    @NotNull
-    private Tenant tenant;
-
+    private Long tenantId;
 
 }

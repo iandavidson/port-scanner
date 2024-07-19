@@ -25,10 +25,10 @@ spring:
   jpa:
     hibernate:
       use-new-id-generator-mappings: false
-
-springdoc:
-  packagesToScan: com.ian.davidson.port.scanner.controller
-  pathsToMatch: /tenant/**
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
 logging:
   level:

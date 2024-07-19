@@ -3,6 +3,7 @@ package com.ian.davidson.port.scanner.service.impl;
 import com.ian.davidson.port.scanner.model.entity.Address;
 import com.ian.davidson.port.scanner.repository.AddressRepository;
 import com.ian.davidson.port.scanner.service.AddressService;
+import java.util.HashSet;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,38 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void addAddresses(Set<Address> addresses) {
+    public void addAddresses(final Set<Address> addresses) {
         addressRepository.saveAll(addresses);
     }
 
     @Override
-    public void deleteAddressesByTenantId(Long tenantId) {
+    public void deleteAddressesByTenantId(final Long tenantId) {
         addressRepository.deleteAllByTenantId(tenantId);
+    }
+
+    @Override
+    public void updateAddressesByTenantId(final Set<Address> newAddresses, final Long tenantId) {
+        Set<Address> existingAddresses = getAddressesByTenantId(tenantId);
+        Set<Address> toBeRemoved = new HashSet<>();
+        Set<Address> toBeAdded = new HashSet<>();
+
+        for (Address newAddress : newAddresses) {
+            if (!existingAddresses.contains(newAddress)) {
+                toBeAdded.add(newAddress);
+            }
+        }
+
+        for (Address existingAddress : existingAddresses) {
+            if (!newAddresses.contains(existingAddress)) {
+                toBeRemoved.add(existingAddress);
+            }
+        }
+
+        addAddresses(toBeAdded);
+        addressRepository.deleteAll(toBeRemoved);
+    }
+
+    private Set<Address> getAddressesByTenantId(final Long tenantId) {
+        return addressRepository.findAllByTenantId(tenantId);
     }
 }

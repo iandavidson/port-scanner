@@ -1,10 +1,8 @@
 package com.ian.davidson.port.scanner.controller;
 
-import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.model.request.TenantRequest;
 import com.ian.davidson.port.scanner.model.request.TenantSurfaceRequest;
 import com.ian.davidson.port.scanner.model.response.TenantResponse;
-import com.ian.davidson.port.scanner.model.response.TenantSurfaceResponse;
 import com.ian.davidson.port.scanner.service.TenantService;
 import com.ian.davidson.port.scanner.transformer.AddressTransformer;
 import com.ian.davidson.port.scanner.transformer.PortTransformer;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +39,14 @@ public class TenantController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TenantResponse> createTenant(@RequestBody TenantRequest tenantRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(tenantTransformer.toTenantResponse(tenantService.createTenant(tenantTransformer.toTenant(tenantRequest))));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(tenantTransformer.toTenantResponse(
+                        tenantService.createTenant(
+                                tenantTransformer.toTenant(
+                                        tenantRequest
+                                )
+                        )));
     }
 
     @GetMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,22 +56,38 @@ public class TenantController {
 
     @DeleteMapping(path = "/{tenantId}")
     public ResponseEntity<Void> deleteTenant(@PathVariable Long tenantId) {
+
         tenantService.deleteTenant(tenantId);
 
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping(path = "/{tenantId}/surface")
-    public ResponseEntity<TenantSurfaceResponse> addSurfaceAtTenant(@PathVariable Long tenantId,
-                                                                    @RequestBody TenantSurfaceRequest tenantSurfaceRequest) {
-        Tenant tenant = tenantService.getTenant(tenantId);
-
+    public ResponseEntity<TenantResponse> addSurfaceAtTenant(@PathVariable final Long tenantId,
+                                                             @RequestBody final TenantSurfaceRequest tenantSurfaceRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(tenantService.addSurface(
-                        portTransformer.toPorts(tenantSurfaceRequest.ports(), tenant),
-                        addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenant),
-                        tenant));
+                .body(tenantTransformer.toTenantResponse(
+                        tenantService.addSurface(
+                                portTransformer.toPorts(tenantSurfaceRequest.ports(), tenantId),
+                                addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenantId),
+                                tenantId
+                        )
+                ));
+    }
+
+    @PutMapping(path = "/{tenantId}/surface")
+    public ResponseEntity<TenantResponse> updateSurfaceAtTenant(@PathVariable final Long tenantId,
+                                                                @RequestBody final TenantSurfaceRequest tenantSurfaceRequest) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(tenantTransformer.toTenantResponse(
+                        tenantService.updateSurface(
+                                portTransformer.toPorts(tenantSurfaceRequest.ports(), tenantId),
+                                addressTransformer.toAddresses(tenantSurfaceRequest.addresses(), tenantId),
+                                tenantId
+                        )
+                ));
     }
 
     @GetMapping

@@ -5,14 +5,12 @@ import com.ian.davidson.port.scanner.exception.ResourceNotFoundException;
 import com.ian.davidson.port.scanner.model.entity.Address;
 import com.ian.davidson.port.scanner.model.entity.Port;
 import com.ian.davidson.port.scanner.model.entity.Tenant;
-import com.ian.davidson.port.scanner.model.response.TenantSurfaceResponse;
-import com.ian.davidson.port.scanner.repository.AddressRepository;
-import com.ian.davidson.port.scanner.repository.PortRepository;
 import com.ian.davidson.port.scanner.repository.TenantRepository;
 import com.ian.davidson.port.scanner.service.AddressService;
 import com.ian.davidson.port.scanner.service.PortService;
 import com.ian.davidson.port.scanner.service.SessionService;
 import com.ian.davidson.port.scanner.service.TenantService;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -60,6 +58,7 @@ public class TenantServiceImpl implements TenantService {
         return tenantRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void deleteTenant(final Long tenantId) {
         sessionService.deleteSessionsByTenantId(tenantId);
@@ -69,8 +68,18 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public TenantSurfaceResponse addSurface(Set<Port> ports, Set<Address> addresses, Tenant tenant) {
-        throw new IllegalStateException("not implemented");
+    public Tenant addSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId) {
+        portService.addPorts(ports);
+        addressService.addAddresses(addresses);
+
+        return getTenant(tenantId);
     }
 
+    @Override
+    public Tenant updateSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId){
+        portService.updatePortsByTenantId(ports, tenantId);
+        addressService.updateAddressesByTenantId(addresses, tenantId);
+
+        return getTenant(tenantId);
+    }
 }

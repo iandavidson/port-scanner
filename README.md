@@ -48,4 +48,5 @@ Port 443 (TCP) — HTTPS
 - Use module that currently defines API to produce into queue, background processing will execute port scanning and write reports to DB
 - API layer will then simply read requested reports and also be able to determine if scanning task is "done".
 
-
+## Self Notes:
+- https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
