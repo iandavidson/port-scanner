@@ -10,6 +10,7 @@ import com.ian.davidson.port.scanner.service.AddressService;
 import com.ian.davidson.port.scanner.service.PortService;
 import com.ian.davidson.port.scanner.service.SessionService;
 import com.ian.davidson.port.scanner.service.TenantService;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -57,6 +58,7 @@ public class TenantServiceImpl implements TenantService {
         return tenantRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void deleteTenant(final Long tenantId) {
         sessionService.deleteSessionsByTenantId(tenantId);
@@ -66,11 +68,18 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant addSurface(Set<Port> ports, Set<Address> addresses, Long tenantId) {
+    public Tenant addSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId) {
         portService.addPorts(ports);
         addressService.addAddresses(addresses);
 
         return getTenant(tenantId);
     }
 
+    @Override
+    public Tenant updateSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId){
+        portService.updatePortsByTenantId(ports, tenantId);
+        addressService.updateAddressesByTenantId(addresses, tenantId);
+
+        return getTenant(tenantId);
+    }
 }

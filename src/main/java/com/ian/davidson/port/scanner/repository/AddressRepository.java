@@ -1,7 +1,7 @@
 package com.ian.davidson.port.scanner.repository;
 
 import com.ian.davidson.port.scanner.model.entity.Address;
-import java.util.List;
+import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +16,5 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     void deleteAllByTenantId(@Param("tenantId") Long tenantId);
 
     @Query(value = "select from address where tenant_id = (:tenantId) ", nativeQuery = true)
-    List<Address> findAllByTenantId(@Param("tenantId") Long tenantId);
+    Set<Address> findAllByTenantId(@Param("tenantId") Long tenantId);
 }
