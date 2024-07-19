@@ -32,10 +32,7 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tenant_id")
-    @ToString.Exclude
-    private Tenant tenant;
+    private Long tenantId;
 
     @OneToMany(mappedBy = "session")
     @ToString.Exclude
