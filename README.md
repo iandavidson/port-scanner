@@ -50,3 +50,11 @@ Port 443 (TCP) — HTTPS
 
 ## Self Notes:
 - https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
+
+## Run Configurations
+- Intellij Community Edition 2024
+- Java Version: 21
+- main class: com.ian.davidson.port.scanner.PortScannerApplication
+- program args I use in addition to application.yml:
+  - --spring.jpa.show-sql=true 
+  - --spring.jpa.properties.hibernate.format_sql=true
