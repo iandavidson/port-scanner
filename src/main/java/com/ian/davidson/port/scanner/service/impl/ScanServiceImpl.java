@@ -1,7 +1,7 @@
 package com.ian.davidson.port.scanner.service.impl;
 
+import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.model.request.ScanRequest;
-import com.ian.davidson.port.scanner.model.response.ScanResponse;
 import com.ian.davidson.port.scanner.queue.ScanDispatchProducer;
 import com.ian.davidson.port.scanner.service.ScanService;
 import jakarta.validation.Valid;
@@ -18,27 +18,10 @@ public class ScanServiceImpl implements ScanService {
         this.scanDispatchProducer = scanDispatchProducer;
     }
 
-
-//    public ScanManagerServiceImpl(final ScanQueue scanQueue){
-//        this.scanQueue = scanQueue;
-//    }
-
     @Override
-    public ScanResponse initializeScan(@Valid ScanRequest scanRequest) {
-        //persist into db
+    public void initializeScan(final Tenant tenant, final Long sessionId) {
+        //make instance composed of {tenantId, sessionId, ports, addresses}
 
-        //push to queue to be executed and results recorded.
-        this.scanDispatchProducer.produce();
-
-        //return tenant id
-        return ScanResponse.builder().id(-1).build();
-
-    }
-
-    @Override
-    public ScanResponse getScan(Long id) {
-        //read JPA REPO, still gotta make that ish.
-
-        return null;
+        //connect to producer, send this off
     }
 }

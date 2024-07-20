@@ -54,7 +54,7 @@ public class TenantController {
         return ResponseEntity.status(HttpStatus.OK).body(tenantTransformer.toTenantResponse(tenantService.getTenant(tenantId)));
     }
 
-    @DeleteMapping(path = "/{tenantId}")
+    @DeleteMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteTenant(@PathVariable Long tenantId) {
 
         tenantService.deleteTenant(tenantId);
@@ -62,7 +62,7 @@ public class TenantController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(path = "/{tenantId}/surface")
+    @PostMapping(path = "/{tenantId}/surface", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TenantResponse> addSurfaceAtTenant(@PathVariable final Long tenantId,
                                                              @RequestBody final TenantSurfaceRequest tenantSurfaceRequest) {
         return ResponseEntity
@@ -76,7 +76,7 @@ public class TenantController {
                 ));
     }
 
-    @PutMapping(path = "/{tenantId}/surface")
+    @PutMapping(path = "/{tenantId}/surface", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TenantResponse> updateSurfaceAtTenant(@PathVariable final Long tenantId,
                                                                 @RequestBody final TenantSurfaceRequest tenantSurfaceRequest) {
         return ResponseEntity
@@ -90,7 +90,7 @@ public class TenantController {
                 ));
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TenantResponse>> getAllTenants() {
         return ResponseEntity
                 .status(HttpStatus.OK)

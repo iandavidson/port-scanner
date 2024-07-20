@@ -46,10 +46,6 @@ public class ScanResult {
 
     @Column(nullable = false)
     @NotNull
-    private Boolean exposed;
-
-    @Column(nullable = false)
-    @NotNull
     private ConnectionStatus status;
 
     @Column(nullable = false)

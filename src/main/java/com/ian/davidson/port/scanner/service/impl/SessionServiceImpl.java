@@ -15,17 +15,17 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void addSession(Session session) {
-        sessionRepository.save(session);
+    public Session addSession(final Session session) {
+        return sessionRepository.save(session);
     }
 
     @Override
-    public void deleteSessionsByTenantId(Long tenantId) {
+    public void deleteSessionsByTenantId(final Long tenantId) {
         sessionRepository.deleteAllByTenantId(tenantId);
     }
 
     @Override
-    public void deleteByTenant(Tenant tenant) {
+    public void deleteByTenant(final Tenant tenant) {
         sessionRepository.deleteByTenant(tenant);
     }
 }

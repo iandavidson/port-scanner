@@ -69,17 +69,21 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public Tenant addSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId) {
+        Tenant tenant = getTenant(tenantId);
+
         portService.addPorts(ports);
         addressService.addAddresses(addresses);
 
-        return getTenant(tenantId);
+        return tenant;
     }
 
     @Override
     public Tenant updateSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId){
+        Tenant tenant = getTenant(tenantId);
+
         portService.updatePortsByTenantId(ports, tenantId);
         addressService.updateAddressesByTenantId(addresses, tenantId);
 
-        return getTenant(tenantId);
+        return tenant;
     }
 }
