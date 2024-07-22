@@ -7,10 +7,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -32,9 +31,11 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "tenant_id")
+    @NotNull
     private Long tenantId;
 
-    @OneToMany(mappedBy = "session")
+    @OneToMany(mappedBy = "sessionId", fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<ScanResult> scanResultSet;
 

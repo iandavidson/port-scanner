@@ -6,6 +6,4 @@ import jakarta.validation.Valid;
 
 public interface ScanService {
     void initializeScan(Tenant tenant, Long sessionId);
-//
-//    ScanResponse getScan(final Long id);
 }

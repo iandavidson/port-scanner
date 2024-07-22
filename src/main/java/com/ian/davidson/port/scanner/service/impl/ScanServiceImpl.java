@@ -1,10 +1,8 @@
 package com.ian.davidson.port.scanner.service.impl;
 
 import com.ian.davidson.port.scanner.model.entity.Tenant;
-import com.ian.davidson.port.scanner.model.request.ScanRequest;
 import com.ian.davidson.port.scanner.queue.ScanDispatchProducer;
 import com.ian.davidson.port.scanner.service.ScanService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping
+@RequestMapping("/scan")
 public class ScanController {
 
     private final ScanService scanService;
@@ -40,8 +40,8 @@ public class ScanController {
         this.sessionTransformer = sessionTransformer;
     }
 
-
-    @PostMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    // scanner/scan/{tenantId}
+    @PostMapping(path = "/{tenantId}/session", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SessionResponse> scan(@PathVariable("tenantId") final Long tenantId) throws URISyntaxException {
         //validate tenantId is valid
         Tenant tenant = tenantService.getTenant(tenantId);
@@ -55,17 +55,30 @@ public class ScanController {
                 .body(sessionTransformer.toSessionResponse(session));
     }
 
-    //return overview object for all
-    @GetMapping(path = "/{tenantId}/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //scanner/scan/{tenantId}/session/{sessionId}
+    //look up session via repository
+    @GetMapping(path = "/{tenantId}/session/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SessionResponse> scanResult(@PathVariable("tenantId") final Long tenantId,
                                                       @PathVariable("sessionId") final Long sessionId) {
+        //validate tenantId is valid
+        Tenant tenant = tenantService.getTenant(tenantId);
 
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(sessionTransformer.toSessionResponse(
+                        sessionService.getSession(sessionId)));
     }
 
-    //look up session via repository
-    @GetMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //return overview object for all
+    @GetMapping(path = "/{tenantId}/overview", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ScanOverviewResponse> scanOverviewsByTenantId(@PathVariable("tenantId") final Long tenantId) {
 
+        //validate tenantId is valid
+        Tenant tenant = tenantService.getTenant(tenantId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(scanResultTransformer.toScanOverviewResponse(tenant));
     }
 
 

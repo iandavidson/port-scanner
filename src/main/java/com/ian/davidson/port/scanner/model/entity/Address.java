@@ -35,14 +35,16 @@ public class Address {
 //    @Pattern(
 //            regexp = "^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$",
 //            message = "Address does not conform to valid IP structure")
-    @NotNull
     @Column(nullable = false)
+    @NotNull
     private String address;
 
     @CreationTimestamp
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
+    @Column(name = "tenant_id")
+    @NotNull
     private Long tenantId;
 
 }

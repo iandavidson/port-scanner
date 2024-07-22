@@ -48,13 +48,9 @@ public class ScanResult {
     @NotNull
     private ConnectionStatus status;
 
-    @Column(nullable = false)
+    @Column(name = "session_id")
     @NotNull
-    private Long tenantId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "session_id")
-    private Session session;
+    private Long sessionId;
 
     @CreationTimestamp
     @Column(name = "creation_date")
