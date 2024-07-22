@@ -9,7 +9,6 @@ import com.ian.davidson.port.scanner.service.SessionService;
 import com.ian.davidson.port.scanner.service.TenantService;
 import com.ian.davidson.port.scanner.transformer.ScanResultTransformer;
 import com.ian.davidson.port.scanner.transformer.SessionTransformer;
-import java.net.URISyntaxException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/scan")
+@RequestMapping
 public class ScanController {
 
     private final ScanService scanService;
@@ -43,7 +42,7 @@ public class ScanController {
 
     // scanner/scan/{tenantId}
     @PostMapping(path = "/{tenantId}/session", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SessionResponse> scan(@PathVariable("tenantId") final Long tenantId) throws URISyntaxException {
+    public ResponseEntity<SessionResponse> startScan(@PathVariable("tenantId") final Long tenantId){
         //validate tenantId is valid
         Tenant tenant = tenantService.getTenant(tenantId);
         //create session, kick off scan,
@@ -56,8 +55,6 @@ public class ScanController {
                 .body(sessionTransformer.toSessionResponse(session));
     }
 
-    //scanner/scan/{tenantId}/session/{sessionId}
-    //look up session via repository
     @GetMapping(path = "/{tenantId}/session/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SessionResponse> scanResult(@PathVariable("tenantId") final Long tenantId,
                                                       @PathVariable("sessionId") final Long sessionId) {

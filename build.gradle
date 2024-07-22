@@ -29,10 +29,8 @@ dependencies {
 	implementation 'ch.qos.logback:logback-classic:1.5.6'
 	implementation 'org.postgresql:postgresql'
 
-	//todo: add this once we are ready to set up message queue
-//	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	// https://mvnrepository.com/artifact/com.rabbitmq/amqp-client
-//	implementation 'com.rabbitmq:amqp-client:5.21.0'
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	implementation 'com.rabbitmq:amqp-client:5.21.0'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -54,7 +52,7 @@ dependencies {
 
 jib() {
 	from {
-		image = 'azul/zulu-openjdk-distroless:21-latest'
+		image = 'azul/zulu-openjdk-distroless:17-latest'
 	}
 	to {
 		image = project.name.toString()
