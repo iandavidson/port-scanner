@@ -39,7 +39,7 @@ public class TenantServiceImpl implements TenantService {
         Optional<Tenant> optional = tenantRepository.findByName(tenant.getName());
 
         if (optional.isPresent()) {
-            throw new ResourceConflictException("Found tenant with same name provided >" + tenant.getName() + "<");
+            throw new ResourceConflictException("Found tenant with same name provided: " + tenant.getName());
         }
 
         tenantRepository.save(tenant);
@@ -50,7 +50,7 @@ public class TenantServiceImpl implements TenantService {
     @Override
     public Tenant getTenant(final Long tenantId) {
         return tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new ResourceNotFoundException("No tenant found at id >" + tenantId + "<"));
+                .orElseThrow(() -> new ResourceNotFoundException("No tenant found at id: " + tenantId));
     }
 
     @Override
