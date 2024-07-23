@@ -1,6 +1,6 @@
 package com.ian.davidson.port.scanner.transformer;
 
-import com.ian.davidson.port.scanner.model.ScanOverview;
+import com.ian.davidson.port.scanner.model.response.ScanOverview;
 import com.ian.davidson.port.scanner.model.entity.ScanResult;
 import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.model.response.ScanOverviewResponse;

@@ -37,7 +37,6 @@ scanner:
   time-out: 5000
   thread-pool-size: 40
 
-rabbit:
-  queue-name: port-scanner
-  dispatch-topic: dispatch
-  result-topic: result
+#rabbit:
+#
+#  dispatch-queue-name: dispatch
