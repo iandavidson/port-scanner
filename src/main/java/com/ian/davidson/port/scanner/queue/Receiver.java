@@ -16,7 +16,7 @@ public class Receiver {
     private final CountDownLatch latch;
     private final ObjectMapper objectMapper;
 
-    public Receiver(final CountDownLatch latch, final ObjectMapperConfig objectMapperConfig){
+    public Receiver(final ObjectMapperConfig objectMapperConfig){
         this.latch = new CountDownLatch(1);
         this.objectMapper = objectMapperConfig.objectMapper();
     }
@@ -26,12 +26,11 @@ public class Receiver {
 
         try {
             ScanItinerary scanItinerary = objectMapper.readValue(message, ScanItinerary.class);
+            //make method call and hand off ScanItinerary instance to be executed
             log.info("success");
         } catch (JsonProcessingException e) {
             log.error("Jiminy friggin crickets");
             throw new RuntimeException(e);
-        }finally{
-            log.error("yo whats going on");
         }
         latch.countDown();
     }
