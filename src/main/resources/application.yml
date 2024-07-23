@@ -25,10 +25,18 @@ spring:
   jpa:
     hibernate:
       use-new-id-generator-mappings: false
+  rabbitmq:
+    username: user
+    password: password
 
 logging:
   level:
     root: INFO
 
 scanner:
-  default-timeout: 20000
+  time-out: 5000
+  thread-pool-size: 40
+
+#rabbit:
+#
+#  dispatch-queue-name: dispatch

@@ -47,6 +47,10 @@ public class Tenant {
     @ToString.Exclude
     private Set<Port> ports;
 
+    @OneToMany(mappedBy = "tenantId", fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private Set<Session> sessions;
+
     @CreationTimestamp
     @Column(name = "creation_date")
     private LocalDateTime creationDate;

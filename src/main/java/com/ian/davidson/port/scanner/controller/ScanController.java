@@ -9,10 +9,10 @@ import com.ian.davidson.port.scanner.service.SessionService;
 import com.ian.davidson.port.scanner.service.TenantService;
 import com.ian.davidson.port.scanner.transformer.ScanResultTransformer;
 import com.ian.davidson.port.scanner.transformer.SessionTransformer;
-import java.net.URISyntaxException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,9 +40,9 @@ public class ScanController {
         this.sessionTransformer = sessionTransformer;
     }
 
-
-    @PostMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SessionResponse> scan(@PathVariable("tenantId") final Long tenantId) throws URISyntaxException {
+    // scanner/scan/{tenantId}
+    @PostMapping(path = "/{tenantId}/session", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SessionResponse> startScan(@PathVariable("tenantId") final Long tenantId){
         //validate tenantId is valid
         Tenant tenant = tenantService.getTenant(tenantId);
         //create session, kick off scan,
@@ -55,17 +55,39 @@ public class ScanController {
                 .body(sessionTransformer.toSessionResponse(session));
     }
 
-    //return overview object for all
-    @GetMapping(path = "/{tenantId}/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{tenantId}/session/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SessionResponse> scanResult(@PathVariable("tenantId") final Long tenantId,
                                                       @PathVariable("sessionId") final Long sessionId) {
+        //validate tenantId is valid
+        Tenant tenant = tenantService.getTenant(tenantId);
 
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(sessionTransformer.toSessionResponse(
+                        sessionService.getSession(sessionId)));
     }
 
-    //look up session via repository
-    @GetMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //return overview object for all
+    @GetMapping(path = "/{tenantId}/overview", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ScanOverviewResponse> scanOverviewsByTenantId(@PathVariable("tenantId") final Long tenantId) {
 
+        //validate tenantId is valid
+        Tenant tenant = tenantService.getTenant(tenantId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(scanResultTransformer.toScanOverviewResponse(tenant));
+    }
+
+    @DeleteMapping(path = "/{tenantId}/session/{sessionId}")
+    public ResponseEntity<Void> deleteSession(@PathVariable("tenantId") final Long tenantId,
+                                              @PathVariable("sessionId") final Long sessionId){
+        //validate tenantId is valid
+        Tenant tenant = tenantService.getTenant(tenantId);
+
+        sessionService.deleteSession(sessionId);
+
+        return ResponseEntity.noContent().build();
     }
 
 

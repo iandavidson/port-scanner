@@ -39,6 +39,8 @@ public class Port {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
+    @Column(name = "tenant_id")
+    @NotNull
     private Long tenantId;
 
 }

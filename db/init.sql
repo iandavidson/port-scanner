@@ -36,8 +36,7 @@ create table if not exists port_scanner.scan_result (
      time_out integer not null,
      exposed boolean not null default false,
      status varchar(10) not null,
-     tenant_id integer not null,
      creation_date date not null,
      session_id integer not null,
-     foreign key (tenant_id) references tenant(id)
+     foreign key (session_id) references session(id)
 );

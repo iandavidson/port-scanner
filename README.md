@@ -21,7 +21,7 @@ Multi-threaded approach to execute atomic port scanning actions.
 Threads will then write to data structure containing representation of Scanning Task  
 
 
-#### Default set of ports to scan:
+#### Set of ports to consider scanning:
 ```text
 Port 20 (UDP) — File Transfer Protocol (FTP)
 Port 22 (TCP) — Secure Shell (SSH)
@@ -31,7 +31,7 @@ Port 80 (TCP) — HTTP
 Port 443 (TCP) — HTTPS
 ```
 
-#### Default IPs to scan:
+#### IPs to test against:
 ```text
 208.67.222.222 and 208.67.220.220 (OpenDNS)
 1.1.1.1 and 1.0.0.1 (Cloudflare)
@@ -50,11 +50,26 @@ Port 443 (TCP) — HTTPS
 
 ## Self Notes:
 - https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
+- https://www.baeldung.com/spring-amqp
 
 ## Run Configurations
 - Intellij Community Edition 2024
 - Java Version: 21
 - main class: com.ian.davidson.port.scanner.PortScannerApplication
 - program args I use in addition to application.yml:
-  - --spring.jpa.show-sql=true 
-  - --spring.jpa.properties.hibernate.format_sql=true
+  - `--spring.jpa.show-sql=true`   
+  - `--spring.jpa.properties.hibernate.format_sql=true`
+
+## Required Infrastructure notes:
+- Using RabbitMQ for message queue needs
+  - running instance locally using docker;
+    - Start up command: `docker run -d -p 5672:5672 -p 15672:15672 --name rabbit-mq -e RABBITMQ_DEFAULT_USER=user -e RABBITMQ_DEFAULT_PASS=password rabbitmq:3-management`
+      - named: "rabbit-mq"
+      - username: user
+      - password: password
+    - Shut it down: `docker kill rabbit-mq` or name you used for container
+  - Check status at exposed port of rabbit: `http://localhost:15672/`
+  - RabbitMQ docker image documentation: https://hub.docker.com/_/rabbitmq 
+  - Required application properties:
+    - `spring.rabbitmq.username=user`
+    - `spring.rabbitmq.password=password`
