@@ -45,10 +45,14 @@ public class PortServiceImpl implements PortService {
         }
 
         addPorts(toBeAdded);
-        portRepository.deleteAll(toBeRemoved);
+        deletePorts(toBeRemoved);
     }
 
     private Set<Port> getPortsByTenantId(final Long tenantId) {
         return portRepository.findAllByTenantId(tenantId);
+    }
+
+    private void deletePorts(final Set<Port> ports){
+        portRepository.deleteAll(ports);
     }
 }
