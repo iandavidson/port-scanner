@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,4 +48,16 @@ public class Address {
     @NotNull
     private Long tenantId;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address1 = (Address) o;
+        return Objects.equals(id, address1.id) && Objects.equals(address, address1.address) && Objects.equals(tenantId, address1.tenantId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, address, tenantId);
+    }
 }

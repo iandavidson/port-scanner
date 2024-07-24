@@ -44,10 +44,14 @@ public class AddressServiceImpl implements AddressService {
         }
 
         addAddresses(toBeAdded);
-        addressRepository.deleteAll(toBeRemoved);
+        deleteAddresses(toBeRemoved);
     }
 
     private Set<Address> getAddressesByTenantId(final Long tenantId) {
         return addressRepository.findAllByTenantId(tenantId);
+    }
+
+    private void deleteAddresses(final Set<Address> addresses){
+        addressRepository.deleteAll(addresses);
     }
 }

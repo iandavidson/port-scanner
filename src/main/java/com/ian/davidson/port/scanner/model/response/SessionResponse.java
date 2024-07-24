@@ -1,13 +1,13 @@
 package com.ian.davidson.port.scanner.model.response;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import lombok.Builder;
 
 @Builder
 public record SessionResponse(
         Long sessionId,
         Long tenantId,
-        Set<ScanResultResponse> scanResults,
+        List<ScanResultResponse> scanResults,
         LocalDateTime startedAt) {
 }

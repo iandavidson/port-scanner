@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,4 +44,16 @@ public class Port {
     @NotNull
     private Long tenantId;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Port port1 = (Port) o;
+        return Objects.equals(id, port1.id) && Objects.equals(port, port1.port) && Objects.equals(tenantId, port1.tenantId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, port, tenantId);
+    }
 }

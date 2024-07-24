@@ -26,3 +26,7 @@ management:
 logging:
   level:
     root: INFO
+
+scanner:
+  time-out: 5000
+  thread-pool-size: 40
