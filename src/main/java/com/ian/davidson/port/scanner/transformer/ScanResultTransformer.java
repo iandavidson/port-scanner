@@ -6,17 +6,17 @@ import com.ian.davidson.port.scanner.model.entity.Tenant;
 import com.ian.davidson.port.scanner.model.response.ScanOverviewResponse;
 import com.ian.davidson.port.scanner.model.response.ScanResultResponse;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ScanResultTransformer {
 
-    public Set<ScanResultResponse> toScanResultResponses(final Set<ScanResult> scanResults) {
+    public List<ScanResultResponse> toScanResultResponses(final Set<ScanResult> scanResults) {
         return scanResults == null
-                ? Collections.emptySet()
-                : scanResults.stream().map(this::toScanResultResponse).collect(Collectors.toSet());
+                ? Collections.emptyList()
+                : scanResults.stream().map(this::toScanResultResponse).toList();
     }
 
     public ScanResultResponse toScanResultResponse(final ScanResult scanResult) {
