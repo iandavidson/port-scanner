@@ -1,6 +1,6 @@
 package com.ian.davidson.port.scanner.model.queue;
 
-import com.ian.davidson.port.scanner.exception.ResourceConflictException;
+import com.ian.davidson.port.scanner.exception.BadRequestException;
 import com.ian.davidson.port.scanner.model.entity.Address;
 import com.ian.davidson.port.scanner.model.entity.Port;
 import com.ian.davidson.port.scanner.model.entity.Tenant;
@@ -13,9 +13,9 @@ import lombok.Builder;
 public record ScanItinerary(Long tenantId, Long sessionId, Set<String> addresses, Set<Integer> ports) {
     public static ScanItinerary newScanComposition(final Tenant tenant, final Long sessionId) {
         if (tenant.getAddresses().isEmpty()) {
-            throw new ResourceConflictException("No addresses associated with tenant, can't execute scan");
+            throw new BadRequestException("No addresses associated with tenant, can't execute scan");
         } else if (tenant.getPorts().isEmpty()) {
-            throw new ResourceConflictException("no ports associated with tenant, can't execute scan");
+            throw new BadRequestException("No ports associated with tenant, can't execute scan");
         }
 
         return new ScanItinerary(
