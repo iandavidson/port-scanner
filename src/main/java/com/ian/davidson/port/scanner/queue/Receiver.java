@@ -16,6 +16,8 @@ public class Receiver {
     private final CountDownLatch latch;
     private final ObjectMapper objectMapper;
 
+
+
     public Receiver(final ObjectMapperConfig objectMapperConfig){
         this.latch = new CountDownLatch(1);
         this.objectMapper = objectMapperConfig.objectMapper();
