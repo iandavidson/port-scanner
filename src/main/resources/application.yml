@@ -34,7 +34,7 @@ logging:
     root: INFO
 
 scanner:
-  time-out: 5000
+  time-out: 200
   thread-pool-size: 40
 
 #rabbit:

@@ -46,6 +46,7 @@ public class SingleThreadScanner {
                                     .port(port)
                                     .sessionId(scanItinerary.sessionId())
                                     .status(ConnectionStatus.OPEN)
+                                    .timeOut(scannerConfig.getTimeout())
                                     .build()
                     );
                 } catch (IOException e) {
@@ -55,6 +56,7 @@ public class SingleThreadScanner {
                                     .port(port)
                                     .sessionId(scanItinerary.sessionId())
                                     .status(ConnectionStatus.CLOSED)
+                                    .timeOut(scannerConfig.getTimeout())
                                     .build()
                     );
                 }
