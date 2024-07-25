@@ -48,9 +48,6 @@ public class SingleThreadScanner {
                                     .status(ConnectionStatus.OPEN)
                                     .build()
                     );
-
-
-                    socket.close();
                 } catch (IOException e) {
                     scanResults.add(
                             ScanResult.builder()
