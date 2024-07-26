@@ -19,7 +19,6 @@ public class Consumer {
     private final ObjectMapper objectMapper;
     private final Scanner scanner;
 
-
     public Consumer(final ObjectMapperConfig objectMapperConfig,
                     final SingleThreadScanner singleThreadScanner) {
         this.latch = new CountDownLatch(1);
@@ -27,6 +26,7 @@ public class Consumer {
         this.scanner = singleThreadScanner;
     }
 
+    //TODO: build wrapper around Consumer class so we can unobtrusively catch fail situations without making this method ugly
     public void consumeMessage(String message) {
         log.info("Received: {}", message);
 

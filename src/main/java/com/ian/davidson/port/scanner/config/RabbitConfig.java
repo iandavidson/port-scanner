@@ -26,6 +26,8 @@ public class RabbitConfig {
 //        this.resultExchangeTopicName = resultExchangeTopicName;
 //    }
 
+    //TODO: leverage properties for queue information
+
     private final String queueName = "queue";
     private final String topicExchangeName = "dispatch";
 
