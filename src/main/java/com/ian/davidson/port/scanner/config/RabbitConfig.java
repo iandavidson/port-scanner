@@ -1,6 +1,6 @@
 package com.ian.davidson.port.scanner.config;
 
-import com.ian.davidson.port.scanner.queue.Receiver;
+import com.ian.davidson.port.scanner.queue.Consumer;
 import lombok.Data;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -41,14 +41,14 @@ public class RabbitConfig {
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
+    Binding binding(final Queue queue, final TopicExchange exchange) {
         //TODO: add unique key for myself
         return BindingBuilder.bind(queue).to(exchange).with("foo.bar.#");
     }
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                             MessageListenerAdapter listenerAdapter) {
+    SimpleMessageListenerContainer container(final ConnectionFactory connectionFactory,
+                                             final MessageListenerAdapter listenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(queueName);
@@ -57,8 +57,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
+    MessageListenerAdapter listenerAdapter(final Consumer consumer) {
+        return new MessageListenerAdapter(consumer, "consumeMessage");
     }
 
 }
