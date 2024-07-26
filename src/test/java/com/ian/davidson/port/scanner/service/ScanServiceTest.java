@@ -33,7 +33,6 @@ public class ScanServiceTest {
             ScanService scanService = new ScanServiceImpl(producer);
             scanService.initializeScan(tenant, sessionId);
         }
-
         verify(producer).send(scanItinerary);
     }
 }
