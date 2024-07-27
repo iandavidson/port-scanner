@@ -1,10 +1,11 @@
-package com.ian.davidson.port.scanner.service;
+package com.ian.davidson.port.scanner.service.impl;
 
 import com.ian.davidson.port.scanner.config.ScannerConfig;
 import com.ian.davidson.port.scanner.model.entity.ConnectionStatus;
 import com.ian.davidson.port.scanner.model.entity.ScanResult;
 import com.ian.davidson.port.scanner.model.queue.ScanItinerary;
 import com.ian.davidson.port.scanner.repository.ScanResultRepository;
+import com.ian.davidson.port.scanner.service.Scanner;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class SingleThreadScanner {
+public class SingleThreadScanner implements Scanner {
 
     //https://stackoverflow.com/questions/10240694/java-socket-api-how-to-tell-if-a-connection-has-been-closed
 
@@ -27,6 +28,7 @@ public class SingleThreadScanner {
         this.scannerConfig = scannerConfig;
     }
 
+    @Override
     public void executeScan(final ScanItinerary scanItinerary) {
         List<ScanResult> scanResults = new ArrayList<>();
         for (String address : scanItinerary.addresses()) {
