@@ -26,7 +26,7 @@ public class ScanResultTransformerTest {
     private static final int PORT_2 = 25;
     private static final String ADDRESS_1 = "8.8.8.8";
     private static final String ADDRESS_2 = "8.8.8.9";
-    private static final ConnectionStatus STATUS_1 = ConnectionStatus.TIMEOUT;
+    private static final ConnectionStatus STATUS_1 = ConnectionStatus.CLOSED;
     private static final ConnectionStatus STATUS_2 = ConnectionStatus.OPEN;
 
 

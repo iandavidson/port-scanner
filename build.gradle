@@ -58,7 +58,7 @@ dependencies {
 
 jib() {
 	from {
-		image = 'azul/zulu-openjdk-distroless:17-latest'
+		image = 'azul/zulu-openjdk-distroless:17'
 	}
 	to {
 		image = project.name.toString()
