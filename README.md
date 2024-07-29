@@ -82,10 +82,11 @@ Port 443 (TCP) — HTTPS
 
 ## Goals:
 - Replace SingleThreadScanner with Multithreaded scanner
-  - Short term goal: Dedicated thread pool for scanning
+  - Short term goal: Multithreaded scanning (queue is still blocking)
     - Multithreaded scanner should have access to a dedicated ThreadPool (preferably managed by spring)
       - Properties related to size of thread pool, etc. should be configured via application.yaml
-  - Longer term goal: dedicated thread pool for scanning, support concurrent processing instances of scanning  
+    - Implies that I'll need a class that extends callable (probably), so I can invoke for all actions that make up a scan. 
+  - Longer term goal: dedicated thread pool for scanning, support concurrent processing instances of scans  
     - Support multiple concurrent session processing (concurrent consumption/processing )
     - Process-wise:
       - Use Round-Robin scheduling strategy:
@@ -100,7 +101,10 @@ Port 443 (TCP) — HTTPS
         - can consider also having another concurrent map that can act as the <SessionId, SizeOfScanOperations> so we have a thread safe way to know when a session is complete
       - Represent an atomic scan operation: (ScanOperation) { sessionId, port, address }
       - Represent an atomic scan result: (ScanResult) { sessionId, port, address }
-    - Proces
 - Update RabbitMQ config to support concurrent consumption.
   - Instead of having a latch enforce synchronization on consumption, configure R-MQ to provision a thread for every consume
   - Use threadsafe Spring component to track concurrent "active" scans, implement interface "Scanner", explicitly wire in rather than single threaded impl
+- Publish OCI image of application
+- Deploy and run in kubernetes easily via helm ->
+  - Build out support and instructions to reference application image build
+  - Have written out template files to support initializing and running infrastructure 

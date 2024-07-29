@@ -19,6 +19,13 @@ public class Consumer {
     private final ObjectMapper objectMapper;
     private final Scanner scanner;
 
+    /*
+    eventually, once we have more than 1 impl of Scanner:
+    - use config class to define @Bean(name = "scanner") factory method returning Scanner type
+    - this @Bean factory should have the preferred impl defined
+    - Use @Qualifier(name = "scanner") in constructor to reference @Bean
+     */
+
     public Consumer(final ObjectMapperConfig objectMapperConfig,
                     final SingleThreadScanner singleThreadScanner) {
         this.latch = new CountDownLatch(1);

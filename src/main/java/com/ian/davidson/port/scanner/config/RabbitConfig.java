@@ -44,7 +44,7 @@ public class RabbitConfig {
 
     @Bean
     Binding binding(final Queue queue, final TopicExchange exchange) {
-        //TODO: add unique key for myself
+        //TODO: add unique key for myself via property
         return BindingBuilder.bind(queue).to(exchange).with("foo.bar.#");
     }
 
