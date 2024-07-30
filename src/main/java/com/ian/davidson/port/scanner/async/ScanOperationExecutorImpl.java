@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -21,12 +22,14 @@ public class ScanOperationExecutorImpl implements ScanOperationExecutor {
         this.taskExecutor = (ThreadPoolTaskExecutor) taskExecutor;
     }
 
-    @Async
     @Override
     public void executeScan(final List<ScanOperationTask> scanOperationTasks,
                                         final List<ScanResult> results) {
 
         List<Future<ScanResult>> futures = Collections.synchronizedList(new ArrayList<>());
+
+        AtomicLong count = new AtomicLong(0L);
+        int max = scanOperationTasks.size();
 
         try {
             for (ScanOperationTask task : scanOperationTasks) {
@@ -37,6 +40,7 @@ public class ScanOperationExecutorImpl implements ScanOperationExecutor {
                 try {
                     results.add(future.get());
                 } catch (Exception e) {
+                    log.error("couldn't add result for some reason");
                     // Handle exceptions
                 }
             }
@@ -44,5 +48,7 @@ public class ScanOperationExecutorImpl implements ScanOperationExecutor {
             // Handle exceptions
             log.error("Unexpected Exception thrown during session scan: {}", e);
         }
+
+        log.info("hello there");
     }
 }
