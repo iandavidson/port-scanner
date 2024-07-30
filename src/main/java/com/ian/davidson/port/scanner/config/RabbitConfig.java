@@ -17,16 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-//    private final String dispatchExchangeTopicName = ;
-//    private final String resultExchangeTopicName;
-
-//    public RabbitConfig(@Value("${rabbit.dispatch-queue-name}") final String dispatchExchangeTopicName,
-//                        @Value("${rabbit.result-queue-name}") final String resultExchangeTopicName){
-//        this.queueName = queueName;
-//        this.dispatchExchangeTopicName = dispatchExchangeTopicName;
-//        this.resultExchangeTopicName = resultExchangeTopicName;
-//    }
-
     private final String queueName;
     private final String topicExchangeName;
 

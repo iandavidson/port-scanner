@@ -10,11 +10,21 @@ import org.springframework.beans.factory.annotation.Value;
 public class ScannerConfig {
 
     private final int timeout; //in ms
-    private final int threadPoolSize;
+    private final int threadPoolCoreSize;
+    private final int threadPoolMaxSize;
+    private final String threadNamePrefix;
+    private final int queueSize;
 
     public ScannerConfig(@Value("${scanner.time-out}") final int timeout,
-                         @Value("${scanner.thread-pool-size}") final int threadPoolSize){
+                         @Value("${scanner.thread-pool-core}") final int threadPoolCoreSize,
+                         @Value("${scanner.thread-pool-max}") final int threadPoolMaxSize,
+                         @Value("${scanner.thread-name-prefix}") final String threadNamePrefix,
+                         @Value("${scanner.queue-size}") final int queueSize){
+
         this.timeout = timeout;
-        this.threadPoolSize = threadPoolSize;
+        this.threadPoolCoreSize = threadPoolCoreSize;
+        this.threadPoolMaxSize = threadPoolMaxSize;
+        this.threadNamePrefix = threadNamePrefix;
+        this.queueSize = queueSize;
     }
 }

@@ -29,10 +29,16 @@ spring:
 logging:
   level:
     root: INFO
+    com.ian.davidson.port.scanner.async: DEBUG
 
 scanner:
   time-out: 200
-  thread-pool-size: 40
+  thread-pool-core: 10
+  thread-pool-max: 40
+  thread-name-prefix: scanner-async-
+  queue-size: 500
+
+
 
 rabbit:
   queue-name: queue
