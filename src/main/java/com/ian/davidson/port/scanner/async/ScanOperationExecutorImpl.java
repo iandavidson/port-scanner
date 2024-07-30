@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class ScanOperationExecutorImpl implements ScanOperationExecutor {
 
@@ -21,10 +23,10 @@ public class ScanOperationExecutorImpl implements ScanOperationExecutor {
 
     @Async
     @Override
-    public List<ScanResult> executeScan(List<ScanOperationTask> scanOperationTasks) {
+    public void executeScan(final List<ScanOperationTask> scanOperationTasks,
+                                        final List<ScanResult> results) {
 
         List<Future<ScanResult>> futures = Collections.synchronizedList(new ArrayList<>());
-        List<ScanResult> results = Collections.synchronizedList(new ArrayList<>());
 
         try {
             for (ScanOperationTask task : scanOperationTasks) {
@@ -40,8 +42,7 @@ public class ScanOperationExecutorImpl implements ScanOperationExecutor {
             }
         } catch (Exception e) {
             // Handle exceptions
+            log.error("Unexpected Exception thrown during session scan: {}", e);
         }
-
-        return results;
     }
 }
