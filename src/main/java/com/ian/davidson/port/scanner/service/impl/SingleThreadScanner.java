@@ -33,6 +33,8 @@ public class SingleThreadScanner implements Scanner {
         List<ScanResult> scanResults = new ArrayList<>();
         for (String address : scanItinerary.addresses()) {
             for (Integer port : scanItinerary.ports()) {
+
+                boolean success = true;
                 try {
                     Socket socket = new Socket();
                     socket.connect(
@@ -41,27 +43,17 @@ public class SingleThreadScanner implements Scanner {
                     );
 
                     socket.close();
-
-                    scanResults.add(
-                            ScanResult.builder()
-                                    .address(address)
-                                    .port(port)
-                                    .sessionId(scanItinerary.sessionId())
-                                    .status(ConnectionStatus.OPEN)
-                                    .timeOut(scannerConfig.getTimeout())
-                                    .build()
-                    );
                 } catch (IOException e) {
-                    scanResults.add(
-                            ScanResult.builder()
-                                    .address(address)
-                                    .port(port)
-                                    .sessionId(scanItinerary.sessionId())
-                                    .status(ConnectionStatus.CLOSED)
-                                    .timeOut(scannerConfig.getTimeout())
-                                    .build()
-                    );
+                    success = false;
                 }
+
+                scanResults.add(ScanResult.builder()
+                        .address(address)
+                        .port(port)
+                        .sessionId(scanItinerary.sessionId())
+                        .status(success ? ConnectionStatus.OPEN : ConnectionStatus.CLOSED)
+                        .timeOut(scannerConfig.getTimeout())
+                        .build());
             }
         }
 
