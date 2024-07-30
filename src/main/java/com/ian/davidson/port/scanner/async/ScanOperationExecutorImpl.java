@@ -8,7 +8,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ public class ScanOperationExecutorImpl implements ScanOperationExecutor {
 
     @Override
     public void executeScan(final List<ScanOperationTask> scanOperationTasks,
-                                        final List<ScanResult> results) {
+                            final List<ScanResult> results) {
 
         List<Future<ScanResult>> futures = Collections.synchronizedList(new ArrayList<>());
 
@@ -48,7 +47,5 @@ public class ScanOperationExecutorImpl implements ScanOperationExecutor {
             // Handle exceptions
             log.error("Unexpected Exception thrown during session scan: {}", e);
         }
-
-        log.info("hello there");
     }
 }

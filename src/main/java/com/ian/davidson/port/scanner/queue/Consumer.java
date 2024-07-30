@@ -35,7 +35,8 @@ public class Consumer {
         this.scanner = multiThreadScanner;
     }
 
-    //TODO: build wrapper around Consumer class so we can unobtrusively catch fail situations without making this method ugly
+    //TODO: build wrapper around Consumer class so we can unobtrusively catch fail situations without making this
+    // method ugly
     public void consumeMessage(String message) {
         log.info("Received: {}", message);
 

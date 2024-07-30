@@ -13,7 +13,7 @@ public class ThreadPoolConfig {
 
     private final ScannerConfig scannerConfig;
 
-    public ThreadPoolConfig(final ScannerConfig scannerConfig){
+    public ThreadPoolConfig(final ScannerConfig scannerConfig) {
         this.scannerConfig = scannerConfig;
     }
 
