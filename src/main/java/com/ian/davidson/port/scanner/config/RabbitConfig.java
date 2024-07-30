@@ -9,6 +9,7 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,11 +27,14 @@ public class RabbitConfig {
 //        this.resultExchangeTopicName = resultExchangeTopicName;
 //    }
 
-    //TODO: leverage properties for queue information
+    private final String queueName;
+    private final String topicExchangeName;
 
-    private final String queueName = "queue";
-    private final String topicExchangeName = "dispatch";
-
+    public RabbitConfig(@Value("${rabbit.queue-name}") String queueName,
+                        @Value("${rabbit.topic-name-dispatch}") String topicExchangeName){
+        this.queueName = queueName;
+        this.topicExchangeName = topicExchangeName;
+    }
 
     @Bean
     Queue queue() {

@@ -33,3 +33,7 @@ logging:
 scanner:
   time-out: 5000
   thread-pool-size: 40
+
+rabbit:
+  queue-name: queue
+  topic-name-dispatch: dispatch

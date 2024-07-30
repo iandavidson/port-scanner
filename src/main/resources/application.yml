@@ -34,6 +34,6 @@ scanner:
   time-out: 200
   thread-pool-size: 40
 
-#rabbit:
-#
-#  dispatch-queue-name: dispatch
+rabbit:
+  queue-name: queue
+  topic-name-dispatch: dispatch
