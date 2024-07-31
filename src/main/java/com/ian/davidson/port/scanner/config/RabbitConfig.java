@@ -49,6 +49,15 @@ public class RabbitConfig {
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(queueName);
         container.setMessageListener(listenerAdapter);
+
+        //TODO: test this ish out
+        //https://stackoverflow.com/questions/40848773/spring-handling-rabbitmq-messages-concurrently
+
+        container.setConcurrentConsumers(10);
+        container.setMaxConcurrentConsumers(50);
+        container.setConsecutiveActiveTrigger(1);
+        container.setConsecutiveIdleTrigger(1);
+        container.setPrefetchCount(5);
         return container;
     }
 
