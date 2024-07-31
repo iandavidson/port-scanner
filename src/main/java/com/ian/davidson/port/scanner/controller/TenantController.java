@@ -77,6 +77,15 @@ public class TenantController {
                 );
     }
 
+    @Operation(summary = "Get tenant by id", description = "Fetch tenant resource by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched")
+    })
+    @GetMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TenantResponse> getTenant(@PathVariable Long tenantId) {
+        return ResponseEntity.status(HttpStatus.OK).body(tenantTransformer.toTenantResponse(tenantService.getTenant(tenantId)));
+    }
+
     @Operation(summary = "Create new tenant", description = "Create new tenant resource")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successfully created")
@@ -93,16 +102,8 @@ public class TenantController {
                         )));
     }
 
-    @Operation(summary = "Get tenant by id", description = "Fetch tenant resource by id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully fetched")
-    })
-    @GetMapping(path = "/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TenantResponse> getTenant(@PathVariable Long tenantId) {
-        return ResponseEntity.status(HttpStatus.OK).body(tenantTransformer.toTenantResponse(tenantService.getTenant(tenantId)));
-    }
-
-    @Operation(summary = "Delete tenant by id", description = "Delete tenant resource by id")
+    @Operation(summary = "Delete tenant by id", description = "Delete tenant resource by id; This will also remove " +
+            "configured surface area and associated scan sessions + results")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted")
     })
@@ -120,7 +121,7 @@ public class TenantController {
             @ApiResponse(responseCode = "201", description = "Successfully created")
     })
     @PostMapping(path = "/{tenantId}/surface", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TenantResponse> addSurfaceAtTenant(@PathVariable final Long tenantId,
+    public ResponseEntity<TenantResponse> addSurfaceAtTenantId(@PathVariable final Long tenantId,
                                                              @RequestBody final TenantSurfaceRequest tenantSurfaceRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -139,7 +140,7 @@ public class TenantController {
             @ApiResponse(responseCode = "200", description = "Successfully updated")
     })
     @PutMapping(path = "/{tenantId}/surface", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TenantResponse> updateSurfaceAtTenant(@PathVariable final Long tenantId,
+    public ResponseEntity<TenantResponse> updateSurfaceAtTenantId(@PathVariable final Long tenantId,
                                                                 @RequestBody final TenantSurfaceRequest tenantSurfaceRequest) {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -152,40 +153,17 @@ public class TenantController {
                 ));
     }
 
-    @Operation(summary = "Start new scan session at tenant id", description = "Kick off new scan session at tenant " +
-            "id, given configured surface at tenant id")
+    //TODO: add delete surface endpoint
+    @Operation(summary = "Update surface for tenant by tenant id", description = "Update configured address and port " +
+            "surface area by tenant id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successfully started scan session at provided tenant id")
+            @ApiResponse(responseCode = "200", description = "Successfully updated")
     })
-    @PostMapping(path = "/{tenantId}/sessions", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SessionResponse> startScan(@PathVariable("tenantId") final Long tenantId) {
-        //validate tenantId is valid
-        Tenant tenant = tenantService.getTenant(tenantId);
-        //create session, kick off scan,
-        Session session = sessionService.addSession(Session.builder().tenantId(tenantId).build());
+    @DeleteMapping(path = "/{tenantId}/surface")
+    public ResponseEntity<Void> deleteSurfaceAtTenantId(@PathVariable("tenantId") final Long tenantId){
+        tenantService.deleteSurface(tenantId);
 
-        scanService.initializeScan(tenant, session.getId());
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(sessionTransformer.toSessionResponse(session));
-    }
-
-    @Operation(summary = "Get scan session result at tenant id and session id", description = "Fetch scan session " +
-            "result at tenant id and session id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully fetched scan session result")
-    })
-    @GetMapping(path = "/{tenantId}/sessions/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SessionResponse> scanResult(@PathVariable("tenantId") final Long tenantId,
-                                                      @PathVariable("sessionId") final Long sessionId) {
-        //validate tenantId is valid
-        Tenant tenant = tenantService.getTenant(tenantId);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(sessionTransformer.toSessionResponse(
-                        sessionService.getSession(sessionId)));
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Get scan overview at tenant id", description = "Fetch overview object describing scan " +
@@ -205,6 +183,42 @@ public class TenantController {
                 .body(scanResultTransformer.toScanOverviewResponse(tenant));
     }
 
+    @Operation(summary = "Start new scan session at tenant id", description = "Kick off new scan session at tenant " +
+            "id, given configured surface at tenant id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successfully started scan session at provided tenant id")
+    })
+    @PostMapping(path = "/{tenantId}/sessions", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SessionResponse> startScanSession(@PathVariable("tenantId") final Long tenantId) {
+        //validate tenantId is valid
+        Tenant tenant = tenantService.getTenant(tenantId);
+        //create session, kick off scan,
+        Session session = sessionService.addSession(Session.builder().tenantId(tenantId).build());
+
+        scanService.initializeScan(tenant, session.getId());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(sessionTransformer.toSessionResponse(session));
+    }
+
+    @Operation(summary = "Get scan session result at tenant id and session id", description = "Fetch scan session " +
+            "result at tenant id and session id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched scan session result")
+    })
+    @GetMapping(path = "/{tenantId}/sessions/{sessionId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SessionResponse> scanSessionResults(@PathVariable("tenantId") final Long tenantId,
+                                                      @PathVariable("sessionId") final Long sessionId) {
+        //validate tenantId is valid
+        Tenant tenant = tenantService.getTenant(tenantId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(sessionTransformer.toSessionResponse(
+                        sessionService.getSession(sessionId)));
+    }
+
     @Operation(summary = "Delete scan session at tenant id and session id", description = "Delete scan session and " +
             "results at tenant id and session id")
     @ApiResponses(value = {
@@ -212,7 +226,7 @@ public class TenantController {
                     "resources at provided session id")
     })
     @DeleteMapping(path = "/{tenantId}/sessions/{sessionId}")
-    public ResponseEntity<Void> deleteSession(@PathVariable("tenantId") final Long tenantId,
+    public ResponseEntity<Void> deleteScanSession(@PathVariable("tenantId") final Long tenantId,
                                               @PathVariable("sessionId") final Long sessionId) {
         //validate tenantId is valid
         Tenant tenant = tenantService.getTenant(tenantId);
@@ -221,5 +235,4 @@ public class TenantController {
 
         return ResponseEntity.noContent().build();
     }
-
 }

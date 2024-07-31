@@ -170,4 +170,23 @@ public class TenantServiceTest {
         verify(portService).updatePortsByTenantId(ports, ID);
         verify(addressService).updateAddressesByTenantId(addresses, ID);
     }
+
+    @Test
+    void deleteSurface() {
+        TenantRepository tenantRepository = mock(TenantRepository.class);
+        when(tenantRepository.findById(ID)).thenReturn(Optional.of(mock(Tenant.class)));
+
+        AddressService addressService = mock(AddressService.class);
+        doNothing().when(addressService).deleteAddressesByTenantId(ID);
+
+        PortService portService = mock(PortService.class);
+        doNothing().when(portService).deletePortsByTenantId(ID);
+
+        TenantService tenantService = new TenantServiceImpl(tenantRepository, addressService, portService, null);
+        tenantService.deleteSurface(ID);
+
+        verify(tenantRepository).findById(ID);
+        verify(addressService).deleteAddressesByTenantId(ID);
+        verify(portService).deletePortsByTenantId(ID);
+    }
 }

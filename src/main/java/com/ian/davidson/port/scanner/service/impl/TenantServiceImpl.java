@@ -62,8 +62,8 @@ public class TenantServiceImpl implements TenantService {
     @Override
     public void deleteTenant(final Long tenantId) {
         sessionService.deleteSessionsByTenantId(tenantId);
-        portService.deletePortsByTenantId(tenantId);
         addressService.deleteAddressesByTenantId(tenantId);
+        portService.deletePortsByTenantId(tenantId);
         tenantRepository.deleteById(tenantId);
     }
 
@@ -78,12 +78,20 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant updateSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId){
+    public Tenant updateSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId) {
         Tenant tenant = getTenant(tenantId);
 
-        portService.updatePortsByTenantId(ports, tenantId);
         addressService.updateAddressesByTenantId(addresses, tenantId);
+        portService.updatePortsByTenantId(ports, tenantId);
 
         return tenant;
+    }
+
+    @Override
+    public void deleteSurface(Long tenantId) {
+        Tenant tenant = getTenant(tenantId);
+
+        addressService.deleteAddressesByTenantId(tenantId);
+        portService.deletePortsByTenantId(tenantId);
     }
 }
