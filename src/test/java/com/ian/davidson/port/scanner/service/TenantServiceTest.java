@@ -135,17 +135,17 @@ public class TenantServiceTest {
         when(tenantRepository.findById(ID)).thenReturn(Optional.of(tenant));
 
         PortService portService = mock(PortService.class);
-        doNothing().when(portService).addPorts(ports);
+        doNothing().when(portService).updatePortsByTenantId(ports, ID);
 
         AddressService addressService = mock(AddressService.class);
-        doNothing().when(addressService).addAddresses(addresses);
+        doNothing().when(addressService).updateAddressesByTenantId(addresses, ID);
 
         TenantService tenantService = new TenantServiceImpl(tenantRepository, addressService, portService, null);
         tenantService.addSurface(ports, addresses, ID);
 
         verify(tenantRepository).findById(ID);
-        verify(portService).addPorts(ports);
-        verify(addressService).addAddresses(addresses);
+        verify(portService).updatePortsByTenantId(ports, ID);
+        verify(addressService).updateAddressesByTenantId(addresses, ID);
     }
 
     @Test

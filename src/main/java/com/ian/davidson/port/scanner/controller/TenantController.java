@@ -62,6 +62,21 @@ public class TenantController {
         this.tenantTransformer = tenantTransformer;
     }
 
+
+    @Operation(summary = "Get all tenants", description = "Fetch all tenant resources")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched all tenants")
+    })
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TenantResponse>> getAllTenants() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(tenantService.getAllTenants().stream()
+                        .map(tenantTransformer::toTenantResponse)
+                        .toList()
+                );
+    }
+
     @Operation(summary = "Create new tenant", description = "Create new tenant resource")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successfully created")
@@ -135,20 +150,6 @@ public class TenantController {
                                 tenantId
                         )
                 ));
-    }
-
-    @Operation(summary = "Get all tenants", description = "Fetch all tenant resources")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully fetched all tenants")
-    })
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TenantResponse>> getAllTenants() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(tenantService.getAllTenants().stream()
-                        .map(tenantTransformer::toTenantResponse)
-                        .toList()
-                );
     }
 
     @Operation(summary = "Start new scan session at tenant id", description = "Kick off new scan session at tenant " +

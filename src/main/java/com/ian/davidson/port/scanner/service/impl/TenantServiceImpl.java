@@ -71,10 +71,8 @@ public class TenantServiceImpl implements TenantService {
     public Tenant addSurface(final Set<Port> ports, final Set<Address> addresses, final Long tenantId) {
         Tenant tenant = getTenant(tenantId);
 
-        //TODO swap "add..." with "update..." so if surface exists and this endpoint is called we don't wind up
-        // with duplicates, etc
-        portService.addPorts(ports);
-        addressService.addAddresses(addresses);
+        portService.updatePortsByTenantId(ports, tenantId);
+        addressService.updateAddressesByTenantId(addresses, tenantId);
 
         return tenant;
     }

@@ -30,16 +30,6 @@ public class AddressServiceTest {
     );
 
     @Test
-    void addAddresses() {
-        AddressRepository addressRepository = mock(AddressRepository.class);
-
-        AddressService addressService = new AddressServiceImpl(addressRepository);
-        addressService.addAddresses(ADDRESS_SET);
-
-        verify(addressRepository).saveAll(ADDRESS_SET);
-    }
-
-    @Test
     void deleteAddressesByTenantId() {
         AddressRepository addressRepository = mock(AddressRepository.class);
         doNothing().when(addressRepository).deleteAllByTenantId(TENANT_ID);

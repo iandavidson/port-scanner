@@ -12,18 +12,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-@Data
-@AllArgsConstructor
 @Builder
 @Slf4j
-public class ScanOperationTask implements Callable<ScanResult> {
-
-    private final ScanOperation scanOperation;
-    private final Integer timeout;
+public record ScanOperationTask(ScanOperation scanOperation, Integer timeout) implements Callable<ScanResult> {
 
     @Override
     public ScanResult call() throws Exception {
-        log.debug("Doing scan on: {}:{} for session:{}", scanOperation.address(), scanOperation.port(),
+        log.debug("Scanning: {}:{} for session:{}", scanOperation.address(), scanOperation.port(),
                 scanOperation.sessionId());
         boolean success = true;
         try {

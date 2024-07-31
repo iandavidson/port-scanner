@@ -15,8 +15,7 @@ public class AddressServiceImpl implements AddressService {
         this.addressRepository = addressRepository;
     }
 
-    @Override
-    public void addAddresses(final Set<Address> addresses) {
+    private void addAddresses(final Set<Address> addresses) {
         addressRepository.saveAll(addresses);
     }
 

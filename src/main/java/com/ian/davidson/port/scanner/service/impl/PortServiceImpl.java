@@ -16,8 +16,7 @@ public class PortServiceImpl implements PortService {
         this.portRepository = portRepository;
     }
 
-    @Override
-    public void addPorts(final Set<Port> ports) {
+    private void addPorts(final Set<Port> ports) {
         portRepository.saveAll(ports);
     }
 
