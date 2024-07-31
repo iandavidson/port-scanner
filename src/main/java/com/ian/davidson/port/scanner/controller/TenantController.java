@@ -153,9 +153,7 @@ public class TenantController {
                 ));
     }
 
-    //TODO: add delete surface endpoint
-    @Operation(summary = "Update surface for tenant by tenant id", description = "Update configured address and port " +
-            "surface area by tenant id")
+    @Operation(summary = "Delete entire surface by tenant id", description = "Delete configured addresses and ports for provided tenant id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully updated")
     })
