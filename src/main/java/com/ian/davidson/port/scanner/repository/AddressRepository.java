@@ -15,6 +15,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     @Query(value = "delete from address where tenant_id = (:tenantId) ", nativeQuery = true)
     void deleteAllByTenantId(@Param("tenantId") Long tenantId);
 
-    @Query(value = "select * from address where tenant_id = (:tenantId) ", nativeQuery = true)
+    @Query(value = "select * from address where tenant_id = (:tenantId) order by address asc", nativeQuery = true)
     Set<Address> findAllByTenantId(@Param("tenantId") Long tenantId);
 }

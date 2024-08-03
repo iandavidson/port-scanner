@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 public interface PortRepository extends JpaRepository<Port, Long> {
 
     @Modifying
-    @Query(value = "delete from port where tenant_id = (:tenantId) ", nativeQuery = true)
+    @Query(value = "delete from port where tenant_id = (:tenantId)", nativeQuery = true)
     void deleteAllByTenantId(@Param("tenantId") Long tenantId);
 
-    @Query(value = "select * from port where tenant_id = (:tenantId) ", nativeQuery = true)
+    @Query(value = "select * from port where tenant_id = (:tenantId) order by port asc", nativeQuery = true)
     Set<Port> findAllByTenantId(@Param("tenantId") Long tenantId);
 }

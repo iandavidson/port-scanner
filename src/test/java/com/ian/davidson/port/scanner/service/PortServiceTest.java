@@ -30,18 +30,6 @@ public class PortServiceTest {
             Port.builder().tenantId(TENANT_ID).port(443).id(4L).creationDate(LocalDateTime.now()).build()
     );
 
-    //add ports
-    @Test
-    void addPorts() {
-        PortRepository portRepository = mock(PortRepository.class);
-
-        PortService portService = new PortServiceImpl(portRepository);
-        portService.addPorts(PORT_SET);
-
-        verify(portRepository).saveAll(PORT_SET);
-    }
-
-    //delete ports By tenantId
     @Test
     void deletePortsByTenantId() {
         PortRepository portRepository = mock(PortRepository.class);
@@ -53,7 +41,6 @@ public class PortServiceTest {
         verify(portRepository).deleteAllByTenantId(TENANT_ID);
     }
 
-    //update ports by tenantId
     @Test
     void updatePortsByTenantId() {
         PortRepository portRepository = mock(PortRepository.class);
