@@ -105,6 +105,7 @@ Port 443 (TCP) — HTTPS
   - Instead of having a latch enforce synchronization on consumption, configure R-MQ to provision a thread for every consume
   - Use threadsafe Spring component to track concurrent "active" scans, implement interface "Scanner", explicitly wire in rather than single threaded impl
 - Publish OCI image of application
+  - Docker command (work in progress): ` docker run -d -p 8080:8080 -p 5432:5432 -p 5672:5672  --name port-scanner port-scanner:latest`
 - Deploy and run in kubernetes easily via helm ->
   - Build out support and instructions to reference application image build
   - Have written out template files to support initializing and running infrastructure 

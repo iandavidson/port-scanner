@@ -58,7 +58,13 @@ dependencies {
 
 jib() {
 	from {
-		image = 'azul/zulu-openjdk-distroless:17'
+		image = 'amazoncorretto:17.0.7-alpine'
+		platforms {
+			platform {
+				architecture = 'arm64'
+				os = 'linux'
+			}
+		}
 	}
 	to {
 		image = project.name.toString()
