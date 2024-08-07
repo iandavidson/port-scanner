@@ -1,6 +1,6 @@
 package com.ian.davidson.port.scanner.service.impl;
 
-import com.ian.davidson.port.scanner.config.ScannerConfig;
+import com.ian.davidson.port.scanner.async.AsyncConfig;
 import com.ian.davidson.port.scanner.model.entity.ConnectionStatus;
 import com.ian.davidson.port.scanner.model.entity.ScanResult;
 import com.ian.davidson.port.scanner.model.queue.ScanItinerary;
@@ -20,12 +20,12 @@ public class SingleThreadScanner implements Scanner {
 
     //https://stackoverflow.com/questions/10240694/java-socket-api-how-to-tell-if-a-connection-has-been-closed
 
+    private final AsyncConfig asyncConfig;
     private final ScanResultRepository scanResultRepository;
-    private final ScannerConfig scannerConfig;
 
-    public SingleThreadScanner(final ScanResultRepository scanResultRepository, final ScannerConfig scannerConfig) {
+    public SingleThreadScanner(final AsyncConfig asyncConfig, final ScanResultRepository scanResultRepository) {
+        this.asyncConfig = asyncConfig;
         this.scanResultRepository = scanResultRepository;
-        this.scannerConfig = scannerConfig;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SingleThreadScanner implements Scanner {
                     Socket socket = new Socket();
                     socket.connect(
                             new InetSocketAddress(address, port),
-                            scannerConfig.getTimeout()
+                            asyncConfig.getTimeout()
                     );
 
                     socket.close();
@@ -52,7 +52,7 @@ public class SingleThreadScanner implements Scanner {
                         .port(port)
                         .sessionId(scanItinerary.sessionId())
                         .status(success ? ConnectionStatus.OPEN : ConnectionStatus.CLOSED)
-                        .timeOut(scannerConfig.getTimeout())
+                        .timeOut(asyncConfig.getTimeout())
                         .build());
             }
         }

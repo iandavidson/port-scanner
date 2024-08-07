@@ -1,3 +1,5 @@
+import java.time.LocalDateTime
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.1'
@@ -68,11 +70,12 @@ jib() {
 	}
 	to {
 		image = project.name.toString()
-		tags = ["latest"]
+		tags = ["latest", LocalDateTime.now().format("yyyyMMdd-HHmmss")]
 	}
 	container {
 		labels = [maintainer: 'Ian Davidson']
 		creationTime = 'USE_CURRENT_TIMESTAMP'
+		args = ["--spring.profiles.active=docker"]
 	}
 }
 

@@ -20,8 +20,8 @@ public class RabbitConfig {
     private final String queueName;
     private final String topicExchangeName;
 
-    public RabbitConfig(@Value("${rabbit.queue-name}") String queueName,
-                        @Value("${rabbit.topic-name-dispatch}") String topicExchangeName){
+    public RabbitConfig(@Value("${scanner.rabbit.queue-name}") String queueName,
+                        @Value("${scanner.rabbit.topic-name-dispatch}") String topicExchangeName){
         this.queueName = queueName;
         this.topicExchangeName = topicExchangeName;
     }

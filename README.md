@@ -52,8 +52,12 @@ Port 443 (TCP) — HTTPS
 - Java Version: 17
 - main class: com.ian.davidson.port.scanner.PortScannerApplication
 - program args I use in addition to application.yml:
-  - `spring.jpa.show-sql=true`   
-  - `spring.jpa.properties.hibernate.format_sql=true`
+  - `--spring.jpa.show-sql=true`
+  - `--spring.jpa.properties.hibernate.format_sql=true`
+  - `--spring.profiles.active=dev`
+
+### Swagger link
+- http://localhost:8080/scanner/swagger-ui/index.html#
 
 ## Required Infrastructure notes:
 ### Postgres:
@@ -105,10 +109,9 @@ Port 443 (TCP) — HTTPS
   - Instead of having a latch enforce synchronization on consumption, configure R-MQ to provision a thread for every consume
   - Use threadsafe Spring component to track concurrent "active" scans, implement interface "Scanner", explicitly wire in rather than single threaded impl
 - Publish OCI image of application
-  - Docker command (work in progress): `docker run -d -p 8080:8080 --name port-scanner port-scanner:latest`
+  - Docker command (work in progress): `docker run -d --name port-scanner -p 8080:8080 -p 9080:9080 port-scanner:latest`
   - helpful commands:
-    - `sudo docker run -it --entrypoint /bin/bash <container_name>`
-  - Determine how to allow for contineraized application reach infra at localhost:5432 (PSQL) & localhost:5672 (RabbitMQ), without having to provision virtual network space
+    - `sudo docker run -it --entrypoint sh <container_name>`
 - Deploy and run in kubernetes easily via helm ->
   - Build out support and instructions to reference application image build
   - Have written out template files to support initializing and running infrastructure 
