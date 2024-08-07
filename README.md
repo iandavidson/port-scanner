@@ -76,42 +76,25 @@ Port 443 (TCP) — HTTPS
       - named: "rabbit-mq"
       - username: user
       - password: password
-    - Shut it down: `docker kill rabbit-mq` or name you used for container
+    - Shut it down: `docker rm rabbitmq` or name you used for container
+    - Remove 
   - Check status at exposed management port for rabbit: `http://localhost:15672/`
   - RabbitMQ docker image documentation: https://hub.docker.com/_/rabbitmq 
   - Required application properties:
     - `spring.rabbitmq.username=user`
     - `spring.rabbitmq.password=password`
 
-
-## Goals:
-- Replace SingleThreadScanner with Multithreaded scanner 
-  - Short term goal: Multithreaded scanning (queue is still blocking) !!COMPLETE!!
-    - Multithreaded scanner should have access to a dedicated ThreadPool (preferably managed by spring)
-      - Properties related to size of thread pool, etc. should be configured via application.yaml
-    - Implies that I'll need a class that extends callable (probably), so I can invoke for all actions that make up a scan. 
-  - Longer term goal: dedicated thread pool for scanning, support concurrent processing instances of scans
-    - Support multiple concurrent session processing (concurrent consumption/processing )
-    - Process-wise:
-      - Use Round-Robin scheduling strategy:
-        - e.g. if there is 3 concurrent sessions {a,b,c}, all started at the same time, and only 1 thread in pool allocated
-          - We expect to see them processed as such: `a[0] then, b[0] then, c[0] then, a[1] then b[1], etc.`
-        - This ensures fair treatment across the currently active sessions.
-    - Tracking:
-      - keep track of all active scans ConcurrentMap<SessionId, ScanItinerary{sessionId, List<Port>, List<Address>>
-        - Do transform from ScanItinerary -> (ThreadSafe impl)List<ScanOperation>; so we have the exhaustive list of work to do for given session.
-      - keep track of progress on active scans with Map<SessionId, AtomicLong>
-        - This will keep track of what index we are at for a given scan session
-        - can consider also having another concurrent map that can act as the <SessionId, SizeOfScanOperations> so we have a thread safe way to know when a session is complete
-      - Represent an atomic scan operation: (ScanOperation) { sessionId, port, address }
-      - Represent an atomic scan result: (ScanResult) { sessionId, port, address }
-- Update RabbitMQ config to support concurrent consumption. 
-  - Instead of having a latch enforce synchronization on consumption, configure R-MQ to provision a thread for every consume
-  - Use threadsafe Spring component to track concurrent "active" scans, implement interface "Scanner", explicitly wire in rather than single threaded impl
-- Publish OCI image of application
-  - Docker command (work in progress): `docker run -d --name port-scanner -p 8080:8080 -p 9080:9080 port-scanner:latest`
+### Running application in containerized environment
+- Publish OCI image of application using google jib gradle plugin:
+  - gradle command: `./gradlew clean build jibDockerBuild`
+- Start up application via docker
+  - Start command: `docker run -d --name port-scanner -p 8080:8080 -p 9080:9080 port-scanner:latest`
+  - Shut it down: `docker rm port-scanner` 
   - helpful commands:
     - `sudo docker run -it --entrypoint sh <container_name>`
+
+## Goals:
 - Deploy and run in kubernetes easily via helm ->
   - Build out support and instructions to reference application image build
   - Have written out template files to support initializing and running infrastructure 
+  - Fully initialize postgres schema using db/init.sql in repo
