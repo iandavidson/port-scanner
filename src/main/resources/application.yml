@@ -57,7 +57,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: docker
+      on-profile: container
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:

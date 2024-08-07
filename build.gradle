@@ -75,7 +75,7 @@ jib() {
 	container {
 		labels = [maintainer: 'Ian Davidson']
 		creationTime = 'USE_CURRENT_TIMESTAMP'
-		args = ["--spring.profiles.active=docker"]
+		args = ["--spring.profiles.active=container"]
 	}
 }
 
