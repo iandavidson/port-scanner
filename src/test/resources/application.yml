@@ -31,12 +31,12 @@ logging:
     root: INFO
 
 scanner:
-  time-out: 200
-  thread-pool-core: 10
-  thread-pool-max: 40
-  thread-name-prefix: scanner-async-
-  queue-size: 500
-
-rabbit:
-  queue-name: queue
-  topic-name-dispatch: dispatch
+  async:
+    time-out: 200
+    thread-pool-core: 10
+    thread-pool-max: 40
+    thread-name-prefix: scanner-async-
+    queue-size: 500
+  rabbit:
+    queue-name: queue
+    topic-name-dispatch: dispatch

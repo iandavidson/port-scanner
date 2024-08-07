@@ -1,6 +1,5 @@
 package com.ian.davidson.port.scanner.async;
 
-import com.ian.davidson.port.scanner.config.ScannerConfig;
 import java.util.concurrent.Executor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,19 +10,19 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Configuration
 public class ThreadPoolConfig {
 
-    private final ScannerConfig scannerConfig;
+    private final AsyncConfig asyncConfig;
 
-    public ThreadPoolConfig(final ScannerConfig scannerConfig) {
-        this.scannerConfig = scannerConfig;
+    public ThreadPoolConfig(final AsyncConfig asyncConfig) {
+        this.asyncConfig = asyncConfig;
     }
 
     @Bean
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(scannerConfig.getThreadPoolCoreSize());
-        executor.setMaxPoolSize(scannerConfig.getThreadPoolMaxSize());
-        executor.setQueueCapacity(scannerConfig.getQueueSize());
-        executor.setThreadNamePrefix("ThreadPool-");
+        executor.setCorePoolSize(asyncConfig.getThreadPoolCoreSize());
+        executor.setMaxPoolSize(asyncConfig.getThreadPoolMaxSize());
+        executor.setQueueCapacity(asyncConfig.getQueueSize());
+        executor.setThreadNamePrefix(asyncConfig.getThreadNamePrefix());
         executor.initialize();
         return executor;
     }
