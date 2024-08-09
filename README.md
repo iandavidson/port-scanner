@@ -92,6 +92,10 @@ Port 443 (TCP) — HTTPS
   - Shut it down: `docker rm port-scanner` 
   - helpful commands:
     - `sudo docker run -it --entrypoint sh <container_name>`
+- Google Jib Gradle Plug-in <-> Docker Desktop protip:
+  - I noticed after closing my computer for a couple days, I could not publish to my local repository on docker desktop via `jibDockerBuild` command
+  - I was able to kill the gradle wrapper daemon (`gradlew`), with `./gradlew --stop`, then rerun my build command
+  - Everytime is working again 🤡
 
 ## Goals:
 - Deploy and run in kubernetes easily via helm ->

@@ -58,17 +58,18 @@ spring:
   config:
     activate:
       on-profile: container
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    properties:
-      hibernate:
-        boot:
-          allow_jdbc_metadata_access: false
-    hibernate:
-      ddl-auto: update
-  sql:
-    init:
-      mode: never
+      #unsure if we need these or not
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    properties:
+#      hibernate:
+#        boot:
+#          allow_jdbc_metadata_access: false
+#    hibernate:
+#      ddl-auto: update
+#  sql:
+#    init:
+#      mode: never
   datasource:
     url: jdbc:postgresql://host.docker.internal:5432/postgres?current_schema=port_scanner
   rabbitmq:
