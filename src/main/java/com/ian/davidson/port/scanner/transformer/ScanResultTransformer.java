@@ -16,7 +16,7 @@ public class ScanResultTransformer {
     public List<ScanResultResponse> toScanResultResponses(final Set<ScanResult> scanResults) {
         return scanResults == null
                 ? Collections.emptyList()
-                : scanResults.stream().map(this::toScanResultResponse).toList();
+                : scanResults.stream().map(this::toScanResultResponse).sorted().toList();
     }
 
     public ScanResultResponse toScanResultResponse(final ScanResult scanResult) {
@@ -33,6 +33,7 @@ public class ScanResultTransformer {
                 .scanOverviews(
                         tenant.getSessions().stream().map(
                                 session -> ScanOverview.builder().sessionId(session.getId()).started(session.getCreationDate()).build())
+                                .sorted()
                                 .toList())
                 .build();
     }
