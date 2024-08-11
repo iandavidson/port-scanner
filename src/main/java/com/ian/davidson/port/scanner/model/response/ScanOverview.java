@@ -4,4 +4,9 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
-public record ScanOverview(Long sessionId, LocalDateTime started) {}
+public record ScanOverview(Long sessionId, LocalDateTime started) implements Comparable<ScanOverview> {
+    @Override
+    public int compareTo(ScanOverview o) {
+        return (int) Math.signum(sessionId - o.sessionId);
+    }
+}

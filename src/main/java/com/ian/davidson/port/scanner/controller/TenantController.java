@@ -73,6 +73,7 @@ public class TenantController {
                 .status(HttpStatus.OK)
                 .body(tenantService.getAllTenants().stream()
                         .map(tenantTransformer::toTenantResponse)
+                        .sorted()
                         .toList()
                 );
     }

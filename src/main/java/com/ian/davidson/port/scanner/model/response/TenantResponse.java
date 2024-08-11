@@ -4,9 +4,13 @@ import java.util.Set;
 import lombok.Builder;
 
 @Builder
-public record TenantResponse(
+public record TenantResponse (
         Long id,
         String name,
         Set<String> addresses,
-        Set<Integer> ports) {
+        Set<Integer> ports) implements Comparable<TenantResponse> {
+    @Override
+    public int compareTo(TenantResponse o) {
+        return (int) Math.signum(id - o.id);
+    }
 }

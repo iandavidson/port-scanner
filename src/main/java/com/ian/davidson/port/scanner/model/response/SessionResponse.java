@@ -9,5 +9,9 @@ public record SessionResponse(
         Long sessionId,
         Long tenantId,
         List<ScanResultResponse> scanResults,
-        LocalDateTime startedAt) {
+        LocalDateTime startedAt) implements Comparable<SessionResponse> {
+    @Override
+    public int compareTo(SessionResponse o) {
+        return (int) Math.signum(sessionId - o.sessionId);
+    }
 }
